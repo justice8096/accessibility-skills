@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "name": "Habilidade de Apoio à Dislexia",
+    "description": "Ferramentas de acessibilidade para apoio à leitura, simplificação de texto e recomendações de fontes para usuários disléxicos"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "Apoio à Dislexia",
+      "description": "Conhecimento sobre dislexia, dificuldades de leitura, processamento fonológico, estratégias de adaptação e intervenções baseadas em evidências"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "Simplificação de Texto",
+      "description": "Simplifica o texto para legibilidade reduzindo a complexidade das frases e substituindo palavras difíceis",
+      "parameters": {
+        "text": {
+          "description": "O texto a simplificar"
+        },
+        "reading_level": {
+          "description": "Nível de leitura alvo (fundamental, médio-inferior, médio-superior, adulto)"
+        },
+        "preserve_meaning": {
+          "description": "Se deve preservar rigorosamente o significado original"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "Geração de Guia de Leitura",
+      "description": "Gera um guia de leitura estruturado com seções fragmentadas, prévia de vocabulário e pontos de verificação de compreensão",
+      "parameters": {
+        "document": {
+          "description": "O conteúdo do documento para gerar um guia"
+        },
+        "chunk_size": {
+          "description": "Tamanho de cada fragmento de leitura (parágrafo, seção, página)"
+        },
+        "include_vocabulary": {
+          "description": "Se deve incluir prévia de vocabulário para palavras difíceis"
+        },
+        "include_checkpoints": {
+          "description": "Se deve adicionar pontos de verificação de compreensão após cada fragmento"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "Recomendação de Fontes",
+      "description": "Recomenda fontes e configurações de formatação amigáveis para disléxicos",
+      "parameters": {
+        "context": {
+          "description": "O contexto de leitura (web, impressão, móvel, ebook, apresentação)"
+        },
+        "age_group": {
+          "description": "Faixa etária do leitor (criança, adolescente, adulto)"
+        },
+        "include_formatting": {
+          "description": "Se deve incluir recomendações de espaçamento, margens e cores"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "Destacador de Sílabas",
+      "description": "Divide palavras em sílabas com código de cores para apoiar a decodificação fonológica, com marcas de tonicidade e limites de morfemas",
+      "parameters": {
+        "text": { "description": "A palavra ou trecho para separar em sílabas" },
+        "highlight_mode": { "description": "Como marcar os limites de sílabas (cores alternadas, sublinhado, separado por hífen, numerado)" },
+        "show_stress": { "description": "Se deve marcar a sílaba tônica. O português já usa acentos gráficos em muitos casos." },
+        "show_morphemes": { "description": "Se deve marcar adicionalmente os limites de prefixo, radical e sufixo" }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "Verificador de Confusões",
+      "description": "Verifica o texto em busca de confusões comuns em português: s/ss/ç/c, x/ch, g/j, mal/mau, mais/mas, e homófonos, com dicas visuais de distinção",
+      "parameters": {
+        "text": { "description": "O texto a verificar em busca de itens confundíveis" },
+        "check_types": { "description": "O que verificar (tudo, confusões de letras, palavras invertidas, homófonos)" },
+        "show_mnemonics": { "description": "Se deve incluir truques de memória visual para cada confusão detectada" },
+        "context_aware": { "description": "Se deve usar o contexto da frase para sugerir a opção correta" }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "Construtor de Vocabulário",
+      "description": "Cria mapas de palavras visuais com decomposição de morfemas (prefixo/radical/sufixo), etimologia, famílias de palavras e mnemônicos para construir vocabulário pelo significado",
+      "parameters": {
+        "words": { "description": "Lista de palavras separadas por vírgulas para criar mapas de vocabulário" },
+        "include_etymology": { "description": "Se deve incluir a origem da palavra e seu significado histórico (latim, grego, tupi)" },
+        "include_word_family": { "description": "Se deve mostrar palavras relacionadas que compartilham o mesmo radical" },
+        "include_mnemonic": { "description": "Se deve gerar uma ajuda de memória visual ou baseada em história" },
+        "reading_level": { "description": "Nível de complexidade (fundamental I, fundamental II, ensino médio, adulto)" }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "Andaime de Escrita",
+      "description": "Gera estruturas de escrita com frases iniciais, bancos de conectivos, modelos de parágrafo e organizadores gráficos para apoiar a expressão escrita",
+      "parameters": {
+        "task": { "description": "Descrição da tarefa de escrita (ex: 'texto dissertativo sobre reciclagem', 'resenha de livro em 3 parágrafos')" },
+        "format": { "description": "Formato de escrita (redação, parágrafo, carta, relatório, narrativa, e-mail)" },
+        "include_starters": { "description": "Se deve incluir sugestões de frases iniciais para cada seção" },
+        "include_transitions": { "description": "Se deve incluir um banco de conectivos organizados por função (adição, contraste, conclusão, etc.)" },
+        "include_organizer": { "description": "Se deve incluir um organizador gráfico (esquema, mapa mental ou fluxograma) para planejamento" },
+        "reading_level": { "description": "Nível de vocabulário para frases iniciais e conectivos (fundamental I, fundamental II, ensino médio, adulto)" }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "Decodificador de Passagens",
+      "description": "Divide uma passagem de leitura em segmentos gerenciáveis com vocabulário prévio, dicas de decodificação integradas, perguntas de compreensão por segmento e modelo de resumo cumulativo",
+      "parameters": {
+        "passage": { "description": "O texto da passagem para decodificar e estruturar" },
+        "chunk_strategy": { "description": "Como dividir a passagem (frase, parágrafo, corte natural)" },
+        "pre_teach_count": { "description": "Número de palavras difíceis para ensinar previamente antes de cada segmento (0 para pular)" },
+        "include_decoding_hints": { "description": "Se deve adicionar guias de pronúncia integrados para palavras difíceis (divisão silábica + transcrição fonética)" },
+        "include_summary_scaffold": { "description": "Se deve fornecer um modelo de resumo para preencher após a passagem completa" }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "Enriquecimento de Contexto",
+      "description": "Expande texto conciso adicionando palavras e frases de apoio semântico ao redor do vocabulário difícil, oferecendo a leitores disléxicos mais pistas contextuais para decodificar palavras desconhecidas — o oposto da simplificação",
+      "parameters": {
+        "text": { "description": "O texto a enriquecer com suporte contextual" },
+        "enrichment_level": { "description": "Quanto contexto adicionar (leve = apenas apostos, moderado = apostos + ecos semânticos, intenso = andaime contextual completo)" },
+        "target_words": { "description": "Lista opcional de palavras específicas para enriquecer, separadas por vírgulas. Se omitida, detecta automaticamente os desafios de decodificação." },
+        "preserve_register": { "description": "Se manter o nível de formalidade original do texto (verdadeiro) ou mudar para linguagem coloquial (falso)" },
+        "show_annotations": { "description": "Se marcar visualmente as frases adicionadas para contexto (colchetes ou cor) para que um professor ou responsável possa ver o enriquecimento" }
+      }
+    }
+  }
+}

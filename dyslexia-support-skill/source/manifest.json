@@ -1,0 +1,332 @@
+{
+  "metadata": {
+    "name": "Dyslexia Support Skill",
+    "version": "1.0.0",
+    "description": "Accessibility tools for reading support, text simplification, and font recommendations tailored to dyslexic users",
+    "author": "Justice",
+    "license": "MIT",
+    "repository": "",
+    "keywords": ["dyslexia", "accessibility", "reading", "text-simplification", "font", "a11y"]
+  },
+  "skills": [
+    {
+      "name": "dyslexia-support",
+      "displayName": "Dyslexia Support",
+      "description": "Knowledge about dyslexia, reading challenges, phonological processing, accommodation strategies, and evidence-based interventions for text accessibility",
+      "path": "skills/dyslexia-support.md",
+      "keywords": ["dyslexia", "reading difficulty", "phonological", "decoding", "accessibility"]
+    }
+  ],
+  "commands": [
+    {
+      "name": "text-simplification",
+      "displayName": "Text Simplification",
+      "description": "Simplify text for readability by reducing sentence complexity, replacing difficult words, and restructuring paragraphs for dyslexic readers",
+      "path": "commands/text-simplification.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to simplify"
+          },
+          "reading_level": {
+            "type": "string",
+            "description": "Target reading level (elementary, middle-school, high-school, adult)",
+            "default": "middle-school"
+          },
+          "preserve_meaning": {
+            "type": "boolean",
+            "description": "Whether to strictly preserve the original meaning or allow paraphrasing",
+            "default": true
+          }
+        },
+        "required": ["text"]
+      },
+      "keywords": ["simplify", "readability", "plain language", "easy read"]
+    },
+    {
+      "name": "reading-guide-generation",
+      "displayName": "Reading Guide Generation",
+      "description": "Generate a structured reading guide with chunked sections, vocabulary previews, and comprehension checkpoints for a given document",
+      "path": "commands/reading-guide-generation.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "The document content or path to generate a guide for"
+          },
+          "chunk_size": {
+            "type": "string",
+            "description": "How large each reading chunk should be (paragraph, section, page)",
+            "default": "paragraph"
+          },
+          "include_vocabulary": {
+            "type": "boolean",
+            "description": "Whether to include vocabulary previews for difficult words",
+            "default": true
+          },
+          "include_checkpoints": {
+            "type": "boolean",
+            "description": "Whether to add comprehension checkpoints after each chunk",
+            "default": true
+          }
+        },
+        "required": ["document"]
+      },
+      "keywords": ["reading guide", "study guide", "comprehension", "chunking"]
+    },
+    {
+      "name": "font-recommendation",
+      "displayName": "Font Recommendation",
+      "description": "Recommend dyslexia-friendly fonts and text formatting settings based on the user's reading context and preferences",
+      "path": "commands/font-recommendation.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "context": {
+            "type": "string",
+            "description": "The reading context (web, print, mobile, ebook, presentation)",
+            "default": "web"
+          },
+          "age_group": {
+            "type": "string",
+            "description": "Age group of the reader (child, teen, adult)",
+            "default": "adult"
+          },
+          "include_formatting": {
+            "type": "boolean",
+            "description": "Whether to include line spacing, margin, and color recommendations",
+            "default": true
+          }
+        },
+        "required": []
+      },
+      "keywords": ["font", "typography", "OpenDyslexic", "formatting", "readable"]
+    },
+    {
+      "name": "syllable-highlighter",
+      "displayName": "Syllable Highlighter",
+      "description": "Break words into color-coded syllables to support phonological decoding, with stress markers and morpheme boundaries for multi-syllable words",
+      "path": "commands/syllable-highlighter.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The word or passage to syllabify"
+          },
+          "highlight_mode": {
+            "type": "string",
+            "description": "How to mark syllable boundaries (color-alternating, underline, slash-separated, numbered)",
+            "default": "color-alternating"
+          },
+          "show_stress": {
+            "type": "boolean",
+            "description": "Whether to mark the primary stressed syllable (bold or accent mark)",
+            "default": true
+          },
+          "show_morphemes": {
+            "type": "boolean",
+            "description": "Whether to additionally mark prefix, root, and suffix boundaries",
+            "default": false
+          }
+        },
+        "required": ["text"]
+      },
+      "keywords": ["syllable", "phonics", "decoding", "phonological", "word-attack"]
+    },
+    {
+      "name": "confusion-checker",
+      "displayName": "Confusion Checker",
+      "description": "Scan text for commonly confused letters (b/d, p/q), reversed words (was/saw), and homophones (their/there/they're) and provide visual disambiguation cues",
+      "path": "commands/confusion-checker.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to check for confusable items"
+          },
+          "check_types": {
+            "type": "string",
+            "description": "What to check for (all, letter-reversals, word-reversals, homophones)",
+            "default": "all"
+          },
+          "show_mnemonics": {
+            "type": "boolean",
+            "description": "Whether to include visual memory tricks for each flagged confusion (e.g., 'bed' shape for b/d)",
+            "default": true
+          },
+          "context_aware": {
+            "type": "boolean",
+            "description": "Whether to use sentence context to suggest the correct homophone choice",
+            "default": true
+          }
+        },
+        "required": ["text"]
+      },
+      "keywords": ["b/d confusion", "letter reversal", "homophone", "mirror letters", "proofreading"]
+    },
+    {
+      "name": "vocabulary-builder",
+      "displayName": "Vocabulary Builder",
+      "description": "Create visual word maps with morpheme breakdown (prefix/root/suffix), etymology, related word families, and mnemonic images to build vocabulary through meaning rather than phonics alone",
+      "path": "commands/vocabulary-builder.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "words": {
+            "type": "string",
+            "description": "Comma-separated list of words to build vocabulary maps for"
+          },
+          "include_etymology": {
+            "type": "boolean",
+            "description": "Whether to include word origin and historical meaning",
+            "default": true
+          },
+          "include_word_family": {
+            "type": "boolean",
+            "description": "Whether to show related words sharing the same root",
+            "default": true
+          },
+          "include_mnemonic": {
+            "type": "boolean",
+            "description": "Whether to generate a visual or story-based memory aid",
+            "default": true
+          },
+          "reading_level": {
+            "type": "string",
+            "description": "Complexity level for definitions and explanations (elementary, middle-school, high-school, adult)",
+            "default": "middle-school"
+          }
+        },
+        "required": ["words"]
+      },
+      "keywords": ["vocabulary", "word map", "morpheme", "etymology", "word family", "mnemonic"]
+    },
+    {
+      "name": "writing-scaffold",
+      "displayName": "Writing Scaffold",
+      "description": "Generate structured writing frameworks with sentence starters, transition word banks, paragraph templates, and organizational graphic organizers to support written expression",
+      "path": "commands/writing-scaffold.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "Description of the writing task (e.g., 'persuasive essay about recycling', '3-paragraph book report')"
+          },
+          "format": {
+            "type": "string",
+            "description": "Writing format (essay, paragraph, letter, report, story, email)",
+            "default": "essay"
+          },
+          "include_starters": {
+            "type": "boolean",
+            "description": "Whether to include sentence starter suggestions for each section",
+            "default": true
+          },
+          "include_transitions": {
+            "type": "boolean",
+            "description": "Whether to include a transition word bank organized by purpose (adding, contrasting, concluding, etc.)",
+            "default": true
+          },
+          "include_organizer": {
+            "type": "boolean",
+            "description": "Whether to include a graphic organizer (outline, mind-map, or flow chart) for planning",
+            "default": true
+          },
+          "reading_level": {
+            "type": "string",
+            "description": "Vocabulary level for starters and transitions (elementary, middle-school, high-school, adult)",
+            "default": "middle-school"
+          }
+        },
+        "required": ["task"]
+      },
+      "keywords": ["writing", "scaffold", "sentence starters", "graphic organizer", "essay", "composition"]
+    },
+    {
+      "name": "passage-decoder",
+      "displayName": "Passage Decoder",
+      "description": "Chunk a reading passage into manageable segments with pre-reading vocabulary, inline decoding hints, comprehension questions per chunk, and a cumulative summary scaffold",
+      "path": "commands/passage-decoder.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "passage": {
+            "type": "string",
+            "description": "The passage text to decode and scaffold"
+          },
+          "chunk_strategy": {
+            "type": "string",
+            "description": "How to split the passage (sentence, paragraph, natural-break)",
+            "default": "natural-break"
+          },
+          "pre_teach_count": {
+            "type": "integer",
+            "description": "Number of difficult words to pre-teach before each chunk (0 to skip)",
+            "default": 3
+          },
+          "include_decoding_hints": {
+            "type": "boolean",
+            "description": "Whether to add inline pronunciation guides for difficult words (syllable breaks + phonetic spelling)",
+            "default": true
+          },
+          "include_summary_scaffold": {
+            "type": "boolean",
+            "description": "Whether to provide a fill-in-the-blank summary template after the full passage",
+            "default": true
+          }
+        },
+        "required": ["passage"]
+      },
+      "keywords": ["passage", "decoding", "comprehension", "chunking", "pre-teach", "reading fluency"]
+    },
+    {
+      "name": "context-enrichment",
+      "displayName": "Context Enrichment",
+      "description": "Expand terse or minimal text by adding semantically supportive words and phrases around difficult vocabulary, giving dyslexic readers more contextual clues to decode unfamiliar words — the opposite of simplification",
+      "path": "commands/context-enrichment.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to enrich with contextual support"
+          },
+          "enrichment_level": {
+            "type": "string",
+            "description": "How much context to add (light = appositives only, moderate = appositives + semantic echoes, heavy = full contextual scaffolding)",
+            "default": "moderate"
+          },
+          "target_words": {
+            "type": "string",
+            "description": "Optional comma-separated list of specific words to enrich around. If omitted, automatically detects likely decoding challenges."
+          },
+          "preserve_register": {
+            "type": "boolean",
+            "description": "Whether to maintain the original text's formality level (true) or shift toward conversational language (false)",
+            "default": true
+          },
+          "show_annotations": {
+            "type": "boolean",
+            "description": "Whether to visually mark which phrases were added for context (brackets or color) so a teacher or parent can see the enrichment",
+            "default": false
+          }
+        },
+        "required": ["text"]
+      },
+      "keywords": ["context", "enrichment", "redundancy", "contextual clues", "word prediction", "top-down reading"]
+    }
+  ],
+  "templates": [],
+  "i18n": {
+    "defaultLocale": "en",
+    "locales": ["en", "es", "fr", "de", "ja", "zh", "ar", "pt", "ko", "hi"],
+    "fallbackStrategy": "default",
+    "localizedMarkdown": false
+  }
+}

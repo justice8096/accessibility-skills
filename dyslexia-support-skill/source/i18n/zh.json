@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "name": "阅读障碍支持技能",
+    "description": "针对阅读障碍用户的无障碍工具，包括阅读支持、文本简化和字体推荐"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "阅读障碍支持",
+      "description": "关于阅读障碍、阅读挑战、语音处理、适应策略和循证干预的知识"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "文本简化",
+      "description": "通过降低句子复杂度和替换难词来简化文本以提高可读性",
+      "parameters": {
+        "text": {
+          "description": "需要简化的文本"
+        },
+        "reading_level": {
+          "description": "目标阅读水平（小学、初中、高中、成人）"
+        },
+        "preserve_meaning": {
+          "description": "是否严格保留原意"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "阅读指南生成",
+      "description": "生成包含分段、词汇预览和理解检查点的结构化阅读指南",
+      "parameters": {
+        "document": {
+          "description": "需要生成指南的文档内容"
+        },
+        "chunk_size": {
+          "description": "每个阅读块的大小（段落、章节、页面）"
+        },
+        "include_vocabulary": {
+          "description": "是否包含难词的词汇预览"
+        },
+        "include_checkpoints": {
+          "description": "是否在每个块后添加理解检查点"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "字体推荐",
+      "description": "推荐适合阅读障碍用户的字体和文本格式设置",
+      "parameters": {
+        "context": {
+          "description": "阅读环境（网页、印刷、移动设备、电子书、演示文稿）"
+        },
+        "age_group": {
+          "description": "读者年龄组（儿童、青少年、成人）"
+        },
+        "include_formatting": {
+          "description": "是否包含行距、边距和颜色建议"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "音节高亮器",
+      "description": "将词语分解为颜色编码的音节以支持语音解码，标注声调和语素边界。中文语境下侧重拼音音节分解和声调标注",
+      "parameters": {
+        "text": { "description": "要进行音节分解的词语或段落" },
+        "highlight_mode": { "description": "标记音节边界的方式（颜色交替、下划线、斜杠分隔、编号）" },
+        "show_stress": { "description": "是否标注重音音节（中文中标注声调）" },
+        "show_morphemes": { "description": "是否额外标注偏旁部首和词根边界" }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "混淆检查器",
+      "description": "扫描文本中常见混淆：形近字（己/已/巳）、音近字（的/地/得）、同音词，并提供视觉区分线索",
+      "parameters": {
+        "text": { "description": "要检查混淆项的文本" },
+        "check_types": { "description": "检查内容（全部、字形混淆、词语混淆、同音词）" },
+        "show_mnemonics": { "description": "是否为每个检测到的混淆提供视觉记忆技巧" },
+        "context_aware": { "description": "是否利用句子上下文建议正确选择" }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "词汇构建器",
+      "description": "创建视觉化词汇地图，包含偏旁部首分解、字源、相关词族和记忆术，通过意义而非仅靠拼音来构建词汇",
+      "parameters": {
+        "words": { "description": "用逗号分隔的词语列表" },
+        "include_etymology": { "description": "是否包含字源和历史含义（汉字演变、部首分析）" },
+        "include_word_family": { "description": "是否展示共享相同部首或词根的相关词" },
+        "include_mnemonic": { "description": "是否生成视觉化或故事化的记忆辅助" },
+        "reading_level": { "description": "解释的复杂度（小学、初中、高中、成人）" }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "写作支架",
+      "description": "生成结构化写作框架，包含开头句式、过渡词库、段落模板和思维导图，支持书面表达",
+      "parameters": {
+        "task": { "description": "写作任务描述（如：'关于环保的议论文'、'3段读书笔记'）" },
+        "format": { "description": "写作格式（作文、段落、书信、报告、故事、电子邮件）" },
+        "include_starters": { "description": "是否为每个部分提供开头句建议" },
+        "include_transitions": { "description": "是否包含按功能分类的过渡词库（递进、转折、总结等）" },
+        "include_organizer": { "description": "是否包含写作规划的图形组织器（提纲、思维导图或流程图）" },
+        "reading_level": { "description": "开头句和过渡词的词汇水平（小学、初中、高中、成人）" }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "段落解码器",
+      "description": "将阅读段落分成可管理的片段，提供预习词汇、行内解码提示、逐段理解检查和累积摘要模板",
+      "parameters": {
+        "passage": { "description": "要解码和结构化的段落文本" },
+        "chunk_strategy": { "description": "段落分割方式（逐句、逐段、自然断点）" },
+        "pre_teach_count": { "description": "每个片段前预教的难词数量（0则跳过）" },
+        "include_decoding_hints": { "description": "是否为难词添加行内注音提示（拼音+释义）" },
+        "include_summary_scaffold": { "description": "是否在全文后提供填空式摘要模板" }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "语境充实",
+      "description": "扩展简洁文本，在难词周围添加语义支持词和短语，为阅读障碍读者提供更多上下文线索来解码陌生词汇——与简化相反的方法",
+      "parameters": {
+        "text": { "description": "需要用上下文支持来充实的文本" },
+        "enrichment_level": { "description": "添加多少上下文（轻度＝仅同位语、中度＝同位语＋语义回声、重度＝完整的上下文支架）" },
+        "target_words": { "description": "可选的逗号分隔的特定目标词列表。省略时自动检测解码难点。" },
+        "preserve_register": { "description": "是否保持原文的正式程度（true）还是转为口语化（false）" },
+        "show_annotations": { "description": "是否用括号或颜色标记添加的上下文短语，以便教师或家长查看充实内容" }
+      }
+    }
+  }
+}

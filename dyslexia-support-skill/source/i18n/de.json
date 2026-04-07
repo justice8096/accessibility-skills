@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "name": "Legasthenie-Unterstützungsfähigkeit",
+    "description": "Barrierefreiheitswerkzeuge zur Leseunterstützung, Textvereinfachung und Schriftartenempfehlungen für Nutzer mit Legasthenie"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "Legasthenie-Unterstützung",
+      "description": "Wissen über Legasthenie, Leseschwierigkeiten, phonologische Verarbeitung, Anpassungsstrategien und evidenzbasierte Interventionen"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "Textvereinfachung",
+      "description": "Vereinfacht Text für bessere Lesbarkeit durch Reduzierung der Satzkomplexität und Ersetzung schwieriger Wörter",
+      "parameters": {
+        "text": {
+          "description": "Der zu vereinfachende Text"
+        },
+        "reading_level": {
+          "description": "Ziel-Leseniveau (Grundschule, Mittelstufe, Oberstufe, Erwachsene)"
+        },
+        "preserve_meaning": {
+          "description": "Ob die ursprüngliche Bedeutung strikt beibehalten werden soll"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "Leseleitfaden-Erstellung",
+      "description": "Erstellt einen strukturierten Leseleitfaden mit unterteilten Abschnitten und Verständniskontrollpunkten",
+      "parameters": {
+        "document": {
+          "description": "Der Dokumentinhalt, für den ein Leitfaden erstellt werden soll"
+        },
+        "chunk_size": {
+          "description": "Größe jedes Leseabschnitts (Absatz, Abschnitt, Seite)"
+        },
+        "include_vocabulary": {
+          "description": "Ob eine Vokabelvorschau für schwierige Wörter enthalten sein soll"
+        },
+        "include_checkpoints": {
+          "description": "Ob Verständniskontrollpunkte nach jedem Abschnitt hinzugefügt werden sollen"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "Schriftartenempfehlung",
+      "description": "Empfiehlt legastheniefreundliche Schriftarten und Textformatierungseinstellungen",
+      "parameters": {
+        "context": {
+          "description": "Der Lesekontext (Web, Druck, Mobil, E-Book, Präsentation)"
+        },
+        "age_group": {
+          "description": "Altersgruppe des Lesers (Kind, Jugendlicher, Erwachsener)"
+        },
+        "include_formatting": {
+          "description": "Ob Empfehlungen für Zeilenabstand, Ränder und Farben enthalten sein sollen"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "Silben-Hervorhebung",
+      "description": "Zerlegt Wörter in farblich markierte Silben zur Unterstützung der phonologischen Dekodierung, mit Betonungsmarkern und Morphemgrenzen bei mehrsilbigen Wörtern",
+      "parameters": {
+        "text": {
+          "description": "Das Wort oder der Textabschnitt zum Silbentrennen"
+        },
+        "highlight_mode": {
+          "description": "Wie Silbengrenzen markiert werden (farbwechselnd, unterstrichen, durch Bindestrich getrennt, nummeriert)"
+        },
+        "show_stress": {
+          "description": "Ob die betonte Silbe hervorgehoben werden soll. Im Deutschen liegt die Betonung oft auf der Stammsilbe."
+        },
+        "show_morphemes": {
+          "description": "Ob zusätzlich Vorsilben-, Stamm- und Nachsilbengrenzen markiert werden sollen"
+        }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "Verwechslungsprüfer",
+      "description": "Durchsucht Text nach häufigen Verwechslungen im Deutschen: ie/ei, d/t-Auslautverhärtung, ä/e, das/dass, und Homophone, mit visuellen Unterscheidungshilfen",
+      "parameters": {
+        "text": {
+          "description": "Der zu prüfende Text auf verwechselbare Elemente"
+        },
+        "check_types": {
+          "description": "Was geprüft werden soll (alles, Buchstabenverwechslungen, Wortumkehrungen, Homophone)"
+        },
+        "show_mnemonics": {
+          "description": "Ob visuelle Merkhilfen für jede erkannte Verwechslung angezeigt werden sollen"
+        },
+        "context_aware": {
+          "description": "Ob der Satzkontext genutzt werden soll, um die richtige Wahl vorzuschlagen"
+        }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "Wortschatz-Aufbau",
+      "description": "Erstellt visuelle Wortkarten mit Morphemzerlegung (Vorsilbe/Stamm/Nachsilbe), Etymologie, Wortfamilien und Eselsbrücken zum Vokabelaufbau durch Bedeutung statt nur Lautierung",
+      "parameters": {
+        "words": {
+          "description": "Kommagetrennte Liste von Wörtern für Vokabelkarten"
+        },
+        "include_etymology": {
+          "description": "Ob Wortherkunft und historische Bedeutung einbezogen werden sollen (germanisch, lateinisch, griechisch)"
+        },
+        "include_word_family": {
+          "description": "Ob verwandte Wörter mit gleicher Wurzel angezeigt werden sollen"
+        },
+        "include_mnemonic": {
+          "description": "Ob eine visuelle oder erzählerische Merkhilfe generiert werden soll"
+        },
+        "reading_level": {
+          "description": "Komplexitätsstufe (Grundschule, Unterstufe, Oberstufe, Erwachsene)"
+        }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "Schreibgerüst",
+      "description": "Erzeugt strukturierte Schreibrahmen mit Satzanfängen, Konnektorensammlungen, Absatzvorlagen und grafischen Planungshilfen zur Unterstützung des schriftlichen Ausdrucks",
+      "parameters": {
+        "task": {
+          "description": "Beschreibung der Schreibaufgabe (z.B. 'Erörterung zum Thema Umweltschutz', 'Buchbericht in 3 Absätzen')"
+        },
+        "format": {
+          "description": "Schreibformat (Aufsatz, Absatz, Brief, Bericht, Geschichte, E-Mail)"
+        },
+        "include_starters": {
+          "description": "Ob Satzanfang-Vorschläge für jeden Abschnitt enthalten sein sollen"
+        },
+        "include_transitions": {
+          "description": "Ob eine Konnektoren-Sammlung nach Funktion geordnet enthalten sein soll (Ergänzung, Gegensatz, Schlussfolgerung usw.)"
+        },
+        "include_organizer": {
+          "description": "Ob ein grafischer Organizer (Gliederung, Mindmap oder Flussdiagramm) zur Planung enthalten sein soll"
+        },
+        "reading_level": {
+          "description": "Vokabelniveau für Satzanfänge und Konnektoren (Grundschule, Unterstufe, Oberstufe, Erwachsene)"
+        }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "Text-Dekodierer",
+      "description": "Teilt einen Lesetext in handhabbare Abschnitte mit vorab erklärtem Wortschatz, integrierten Dekodierungshilfen, Verständnisfragen pro Abschnitt und einer kumulativen Zusammenfassungsvorlage",
+      "parameters": {
+        "passage": {
+          "description": "Der Textabschnitt zum Dekodieren und Strukturieren"
+        },
+        "chunk_strategy": {
+          "description": "Wie der Text aufgeteilt wird (Satz, Absatz, natürlicher Umbruch)"
+        },
+        "pre_teach_count": {
+          "description": "Anzahl schwieriger Wörter, die vor jedem Abschnitt vorab erklärt werden (0 zum Überspringen)"
+        },
+        "include_decoding_hints": {
+          "description": "Ob integrierte Aussprachehilfen für schwierige Wörter hinzugefügt werden sollen (Silbentrennung + Lautschrift)"
+        },
+        "include_summary_scaffold": {
+          "description": "Ob eine Lückentext-Zusammenfassungsvorlage nach dem gesamten Text bereitgestellt werden soll"
+        }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "Kontextanreicherung",
+      "description": "Erweitert knappen Text durch semantisch unterstützende Wörter und Phrasen um schwieriges Vokabular, damit dyslektische Leser mehr Kontexthinweise zum Entschlüsseln unbekannter Wörter erhalten — das Gegenteil von Vereinfachung",
+      "parameters": {
+        "text": { "description": "Der Text, der mit kontextueller Unterstützung angereichert werden soll" },
+        "enrichment_level": { "description": "Wie viel Kontext hinzugefügt wird (leicht = nur Appositionen, mittel = Appositionen + semantische Echos, intensiv = vollständiges kontextuelles Gerüst)" },
+        "target_words": { "description": "Optionale kommagetrennte Liste bestimmter Wörter zum Anreichern. Wenn weggelassen, werden Dekodierungsherausforderungen automatisch erkannt." },
+        "preserve_register": { "description": "Ob das ursprüngliche Formalitätsniveau beibehalten (wahr) oder zu Umgangssprache gewechselt werden soll (falsch)" },
+        "show_annotations": { "description": "Ob hinzugefügte Phrasen visuell markiert werden sollen (Klammern oder Farbe), damit Lehrer oder Eltern die Anreicherung sehen können" }
+      }
+    }
+  }
+}

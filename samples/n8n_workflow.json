@@ -1,0 +1,227 @@
+{
+  "name": "Dyslexia & Dyscalculia Support Skills Demo",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "skill-demo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.body.skill }}",
+              "rightValue": "dyslexia",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "skill-router",
+      "name": "Route by Skill",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "system-prompt",
+              "name": "systemPrompt",
+              "value": "You are an expert in dyslexia accommodation and reading accessibility. You understand phonological processing deficits, visual processing challenges, and working memory limitations.\n\nYour accommodation strategies include:\n- Text simplification: reducing complexity while preserving meaning\n- Syllable highlighting: color-coded syllable segmentation for decoding\n- Confusion checking: detecting b/d reversals, homophones, mirror words\n- Vocabulary building: morpheme breakdown, etymology, word families, mnemonics\n- Writing scaffolds: sentence starters, transition banks, graphic organizers\n- Passage decoding: chunked reading with pre-teaching and comprehension checks\n- Context enrichment: adding semantically supportive words around difficult vocabulary so readers can use top-down processing to decode unfamiliar words\n- Font and formatting: dyslexia-friendly typography recommendations\n\nAll recommendations should be grounded in reading science and WCAG 2.1 AA standards.",
+              "type": "string"
+            },
+            {
+              "id": "user-msg",
+              "name": "userMessage",
+              "value": "=Please run the '{{ $json.body.command }}' command.\n\nInput:\n{{ $json.body.input }}\n\n{{ $json.body.options ? 'Options: ' + $json.body.options : '' }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "dyslexia-prompt",
+      "name": "Dyslexia Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "system-prompt",
+              "name": "systemPrompt",
+              "value": "You are an expert in dyscalculia accommodation and mathematical accessibility. You understand number sense deficits, procedural memory challenges, spatial reasoning difficulties, and working memory limitations for numerical information.\n\nYour accommodation strategies include:\n- Number visualization: concrete models, number lines, area models, base-ten blocks\n- Step-by-step math: micro-step scaffolding with plain-language explanations\n- Estimation practice: building magnitude awareness through real-world exercises\n- Range comparison: simplified range bars replacing tables of numbers\n- Proportion waffle grids: 10×10 countable squares replacing pie charts\n- Trend direction: directional arrows replacing full line graphs\n- Difference gap: visual gap bars making subtraction visible\n- Elapsed time: timeline bars avoiding base-60 mental arithmetic\n\nAll approaches follow the CRA framework (Concrete-Representational-Abstract) and are grounded in mathematical cognition research.",
+              "type": "string"
+            },
+            {
+              "id": "user-msg",
+              "name": "userMessage",
+              "value": "=Please run the '{{ $json.body.command }}' command.\n\nInput:\n{{ $json.body.input }}\n\n{{ $json.body.options ? 'Options: ' + $json.body.options : '' }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "dyscalculia-prompt",
+      "name": "Dyscalculia Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"{{ $json.body?.model || 'llama3' }}\",\n  \"messages\": [\n    {\"role\": \"system\", \"content\": {{ JSON.stringify($json.systemPrompt) }}},\n    {\"role\": \"user\", \"content\": {{ JSON.stringify($json.userMessage) }}}\n  ],\n  \"stream\": false\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "ollama-dyslexia",
+      "name": "Ollama (Dyslexia)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"{{ $json.body?.model || 'llama3' }}\",\n  \"messages\": [\n    {\"role\": \"system\", \"content\": {{ JSON.stringify($json.systemPrompt) }}},\n    {\"role\": \"user\", \"content\": {{ JSON.stringify($json.userMessage) }}}\n  ],\n  \"stream\": false\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "ollama-dyscalculia",
+      "name": "Ollama (Dyscalculia)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "result",
+              "name": "result",
+              "value": "={{ $json.message?.content || $json.error || 'No response from Ollama' }}",
+              "type": "string"
+            },
+            {
+              "id": "model",
+              "name": "model",
+              "value": "={{ $json.model || 'unknown' }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "format-response",
+      "name": "Format Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, skill: $('Webhook Trigger').item.json.body.skill, command: $('Webhook Trigger').item.json.body.command, model: $json.model, result: $json.result }) }}"
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          { "node": "Route by Skill", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Route by Skill": {
+      "main": [
+        [
+          { "node": "Dyslexia Prompt", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "Dyscalculia Prompt", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Dyslexia Prompt": {
+      "main": [
+        [
+          { "node": "Ollama (Dyslexia)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Dyscalculia Prompt": {
+      "main": [
+        [
+          { "node": "Ollama (Dyscalculia)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Ollama (Dyslexia)": {
+      "main": [
+        [
+          { "node": "Format Response", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Ollama (Dyscalculia)": {
+      "main": [
+        [
+          { "node": "Format Response", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Format Response": {
+      "main": [
+        [
+          { "node": "Respond to Webhook", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "accessibility-skills-demo"
+  },
+  "tags": [
+    { "name": "accessibility" },
+    { "name": "dyslexia" },
+    { "name": "dyscalculia" },
+    { "name": "ollama" }
+  ]
+}

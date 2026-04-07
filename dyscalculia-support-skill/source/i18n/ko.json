@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "산술장애 지원 스킬",
+    "description": "산술장애 사용자를 위한 수 감각, 수학 시각화 및 단계별 계산 지원 접근성 도구. 주판(주산) 기반 시각화 방법 포함"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "산술장애(난산증) 지원",
+      "description": "산술장애, 수 처리 어려움, 즉각적 수량 파악(subitizing) 곤란, 공간 추론 및 증거 기반 개입에 대한 지식. 주판(주산)을 활용한 구체적 시각화 방법과 만 단위 자릿수 체계 지원 포함"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "수 시각화",
+      "description": "주판(주산) 모델, 수직선, 넓이 모델 등 구체적 모델을 사용하여 숫자와 수학적 관계의 시각적 표현을 만듭니다. 한국식 만 단위(만, 억, 조) 자릿수 그룹핑 지원",
+      "parameters": {
+        "expression": {
+          "description": "시각화할 숫자 또는 수학 표현식"
+        },
+        "model_type": {
+          "description": "시각화 모델 (수직선, 넓이-모델, 십진-블록, 분수-막대, 원-그래프). 주판 모델도 사용 가능"
+        },
+        "include_labels": {
+          "description": "설명 라벨과 주석을 포함할지 여부"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "단계별 수학 풀이",
+      "description": "수학 문제를 쉬운 한국어 설명과 함께 명시적 단계로 분해합니다. 주산식 암산 방법도 활용 가능",
+      "parameters": {
+        "problem": {
+          "description": "단계별로 풀 수학 문제"
+        },
+        "difficulty_level": {
+          "description": "비계 수준 (기본＝초등 저학년, 중급＝초등 고학년, 고급＝중학교)"
+        },
+        "show_check": {
+          "description": "마지막에 검산 단계를 포함할지 여부"
+        },
+        "use_analogies": {
+          "description": "추상적 개념에 일상생활 비유(쇼핑, 교통 등)를 포함할지 여부"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "어림 연습",
+      "description": "일상적 맥락(원화로 쇼핑, 킬로미터 거리)을 사용하여 수 감각을 구축하는 어림 연습을 생성합니다",
+      "parameters": {
+        "topic": {
+          "description": "어림 연습 주제 영역 (돈(원화), 시간, 거리(킬로미터), 무게(그램/킬로그램), 수량)"
+        },
+        "difficulty": {
+          "description": "난이도 (초급, 중급, 고급)"
+        },
+        "count": {
+          "description": "생성할 연습 수"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "범위 비교",
+      "description": "중심값 표시가 있는 간소화된 범위 막대를 사용하여 두 개 이상의 데이터셋을 시각적으로 비교합니다. 숫자로 통계를 비교하는 인지적 부담을 피하도록 설계되었습니다. 한국식 만 단위(만, 억) 지원",
+      "parameters": {
+        "datasets": {
+          "description": "비교할 데이터셋, 각각 '라벨: 최소-최대, 중심값' 형식 (예: '반 A: 40-95, 72'). 중심값은 평균, 중앙값 또는 최빈값"
+        },
+        "center_type": {
+          "description": "중심 표시가 나타내는 것 (평균, 중앙값, 최빈값)"
+        },
+        "show_numbers": {
+          "description": "표시 옆에 중심값을 숫자로 표시할지 여부 (false = 순수 시각적 비교)"
+        },
+        "context": {
+          "description": "선택적 맥락 설명 (예: '시험 점수', '온도(℃)', '가격(원)')"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "비율 와플 격자",
+      "description": "원 그래프 대신 셀 수 있는 정사각형 격자를 사용하여 비율과 백분율을 시각화하여 부분-전체 관계를 구체적이고 셀 수 있게 만듭니다",
+      "parameters": {
+        "items": {
+          "description": "표시할 비율, '라벨: 값' 형식 (예: '합격: 72%', '남학생: 30명 중 15명'). 백분율, 분수 또는 'X 중 Y' 형식 지원."
+        },
+        "total": {
+          "description": "비율의 전체 (기본값: 자동 감지 또는 백분율의 경우 100)"
+        },
+        "grid_size": {
+          "description": "격자 크기 (기본값 10 = 10×10 = 100칸). 저학년 학생에게는 5 사용."
+        },
+        "side_by_side": {
+          "description": "여러 비율을 비교를 위해 나란히 별도의 격자로 표시할지 여부"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "추세 방향",
+      "description": "축 읽기 없이 간소화된 방향 지시자와 선택적 스파크라인으로 값이 오르는지, 내리는지, 유지되는지 표시합니다",
+      "parameters": {
+        "series": {
+          "description": "데이터 시리즈, '라벨: v1, v2, v3, ...' 형식 (예: '주간 점수: 65, 70, 68, 75, 80'). 최소 3개 값 필요."
+        },
+        "show_sparkline": {
+          "description": "방향 화살표 옆에 미니 추세 곡선을 표시할지 여부 (축 없이 모양만)"
+        },
+        "sensitivity": {
+          "description": "어느 정도 변화를 추세로 볼 것인지 (엄격, 보통, 느슨)"
+        },
+        "context": {
+          "description": "요약을 위한 선택적 맥락 (예: '6주간 수학 퀴즈 점수')"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "차이 간격",
+      "description": "두 값의 차이를 명시적인 간격 막대로 시각화하여 암산 없이 '얼마나 더 많은지/적은지'를 볼 수 있게 합니다",
+      "parameters": {
+        "value_a": {
+          "description": "라벨이 있는 첫 번째 값 (예: '내 점수: 72')"
+        },
+        "value_b": {
+          "description": "라벨이 있는 두 번째 값 (예: '반 평균: 65')"
+        },
+        "show_gap_value": {
+          "description": "간격에 숫자 차이를 표시할지 여부 (false = 시각적 간격만 표시)"
+        },
+        "context": {
+          "description": "비교를 위한 선택적 맥락 (예: '점', '센티미터', '원')"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "경과 시간",
+      "description": "타임라인 막대를 사용하여 두 시간 사이의 시간을 계산하고 시각화하여 60진법 암산을 피합니다",
+      "parameters": {
+        "start_time": {
+          "description": "시작 시간 (예: '10:45', '오후 2:30', '14:00'). 한국은 12시간제와 24시간제 모두 사용."
+        },
+        "end_time": {
+          "description": "종료 시간 (예: '12:20', '16:15')"
+        },
+        "show_clock_faces": {
+          "description": "시작 및 종료 시점에 간단한 시계 다이어그램을 표시할지 여부"
+        },
+        "break_into_steps": {
+          "description": "경과 시간을 시간 및 분 블록으로 시각적으로 분할할지 여부"
+        }
+      }
+    }
+  }
+}

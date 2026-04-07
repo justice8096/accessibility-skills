@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "name": "ディスレクシア支援スキル",
+    "description": "ディスレクシアのユーザー向けの読書支援、テキスト簡素化、フォント推奨のアクセシビリティツール"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "ディスレクシア支援",
+      "description": "ディスレクシア、読書の課題、音韻処理、適応戦略、テキストアクセシビリティのためのエビデンスに基づく介入に関する知識"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "テキスト簡素化",
+      "description": "文の複雑さを減らし、難しい単語を置き換えてテキストを簡素化します",
+      "parameters": {
+        "text": {
+          "description": "簡素化するテキスト"
+        },
+        "reading_level": {
+          "description": "目標読解レベル（初等、中等、高等、成人）"
+        },
+        "preserve_meaning": {
+          "description": "元の意味を厳密に保持するかどうか"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "読書ガイド生成",
+      "description": "セクション分割、語彙プレビュー、理解度チェックポイントを含む構造化された読書ガイドを生成します",
+      "parameters": {
+        "document": {
+          "description": "ガイドを生成するドキュメント"
+        },
+        "chunk_size": {
+          "description": "各読書チャンクのサイズ（段落、セクション、ページ）"
+        },
+        "include_vocabulary": {
+          "description": "難しい単語の語彙プレビューを含めるかどうか"
+        },
+        "include_checkpoints": {
+          "description": "各チャンクの後に理解度チェックポイントを追加するかどうか"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "フォント推奨",
+      "description": "ディスレクシアに優しいフォントとテキスト書式設定を推奨します",
+      "parameters": {
+        "context": {
+          "description": "読書のコンテキスト（ウェブ、印刷、モバイル、電子書籍、プレゼンテーション）"
+        },
+        "age_group": {
+          "description": "読者の年齢層（子供、10代、成人）"
+        },
+        "include_formatting": {
+          "description": "行間隔、余白、色の推奨を含めるかどうか"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "音節ハイライター",
+      "description": "単語を色分けされた音節に分割して音韻認識を支援し、アクセント位置と形態素の境界を表示します",
+      "parameters": {
+        "text": { "description": "音節分割する単語またはテキスト" },
+        "highlight_mode": { "description": "音節の区切り方（色交互、下線、中黒区切り、番号付き）" },
+        "show_stress": { "description": "アクセントのある音節を強調するかどうか" },
+        "show_morphemes": { "description": "接頭辞・語幹・接尾辞の境界も追加表示するかどうか" }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "混同チェッカー",
+      "description": "テキスト内の混同しやすい文字（は/わ、お/を）、類似漢字、同音異義語を検出し、視覚的な区別のヒントを提供します",
+      "parameters": {
+        "text": { "description": "混同要素をチェックするテキスト" },
+        "check_types": { "description": "チェック対象（すべて、文字の混同、単語の逆転、同音異義語）" },
+        "show_mnemonics": { "description": "検出された混同に対して視覚的な記憶のコツを含めるかどうか" },
+        "context_aware": { "description": "文の文脈を使って正しい選択を提案するかどうか" }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "語彙ビルダー",
+      "description": "形態素分解（接頭辞/語根/接尾辞）、語源、関連語族、記憶術を使った視覚的な単語マップを作成し、音読みだけに頼らず意味から語彙を構築します",
+      "parameters": {
+        "words": { "description": "語彙マップを作成する単語のカンマ区切りリスト" },
+        "include_etymology": { "description": "語源と歴史的意味を含めるかどうか（漢字の場合は部首分解）" },
+        "include_word_family": { "description": "同じ語根を共有する関連語を表示するかどうか" },
+        "include_mnemonic": { "description": "視覚的またはストーリーベースの記憶術を生成するかどうか" },
+        "reading_level": { "description": "説明の複雑さ（小学校、中学校、高校、大人）" }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "作文の足場",
+      "description": "文の書き出し、接続詞バンク、段落テンプレート、構成用グラフィックオーガナイザーを含む構造化された作文フレームワークを生成します",
+      "parameters": {
+        "task": { "description": "作文課題の説明（例：'リサイクルについての意見文'、'読書感想文3段落'）" },
+        "format": { "description": "作文形式（作文、段落、手紙、レポート、物語、メール）" },
+        "include_starters": { "description": "各セクションの書き出し文の提案を含めるかどうか" },
+        "include_transitions": { "description": "目的別に整理された接続詞バンクを含めるかどうか（追加、対比、結論など）" },
+        "include_organizer": { "description": "計画用のグラフィックオーガナイザー（アウトライン、マインドマップ、フローチャート）を含めるかどうか" },
+        "reading_level": { "description": "書き出しと接続詞の語彙レベル（小学校、中学校、高校、大人）" }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "文章デコーダー",
+      "description": "読解文を扱いやすいセグメントに分割し、事前語彙学習、インライン読解ヒント、セグメントごとの理解度チェック、累積要約テンプレートを提供します",
+      "parameters": {
+        "passage": { "description": "デコードして構造化する文章テキスト" },
+        "chunk_strategy": { "description": "文章の分割方法（文単位、段落単位、自然な区切り）" },
+        "pre_teach_count": { "description": "各セグメント前に事前学習する難しい単語の数（0でスキップ）" },
+        "include_decoding_hints": { "description": "難しい単語にインライン読み方ガイドを追加するかどうか（ふりがな＋意味）" },
+        "include_summary_scaffold": { "description": "全文後に穴埋め要約テンプレートを提供するかどうか" }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "文脈の補強",
+      "description": "簡潔なテキストを拡張し、難しい語彙の周りに意味的に支援する言葉やフレーズを追加して、ディスレクシアの読者が未知の単語を文脈から推測できるようにします — 簡略化の逆のアプローチ",
+      "parameters": {
+        "text": { "description": "文脈的支援で補強するテキスト" },
+        "enrichment_level": { "description": "追加する文脈の量（軽度＝同格句のみ、中度＝同格句＋意味の反復、重度＝完全な文脈的足場）" },
+        "target_words": { "description": "補強対象の特定の単語のカンマ区切りリスト（任意）。省略時は解読困難な単語を自動検出。" },
+        "preserve_register": { "description": "元のテキストの文体レベルを維持するか（true）、会話調に変えるか（false）" },
+        "show_annotations": { "description": "文脈のために追加されたフレーズを視覚的にマーク（括弧や色）して教師や保護者が補強を確認できるようにするか" }
+      }
+    }
+  }
+}

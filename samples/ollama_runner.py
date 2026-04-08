@@ -79,16 +79,21 @@ def load_prompt(skill: str, command: str, locale: str = "en") -> dict:
 
     text = path.read_text(encoding="utf-8")
 
-    # Try strict YAML first
+    # Try strict YAML first with schema validation
     try:
         data = yaml.safe_load(text)
         if isinstance(data, dict):
+            # Validate expected top-level fields
+            expected_keys = {"name", "id", "description", "context", "parameters", "output", "models", "locale", "direction"}
+            unexpected = set(data.keys()) - expected_keys
+            if unexpected:
+                print(f"WARNING: Unexpected YAML fields: {', '.join(sorted(unexpected))}", file=sys.stderr)
             return data
-    except yaml.YAMLError:
-        pass
+    except yaml.YAMLError as e:
+        print(f"WARNING: YAML parse error, falling back to text parser: {e}", file=sys.stderr)
 
-    # Fallback: extract fields from text
-    result: dict = {"_raw": text}
+    # Fallback: extract fields from text (no raw content stored to avoid data leakage)
+    result: dict = {}
     for field in ("name", "id", "description"):
         for line in text.splitlines():
             if line.startswith(f"{field}:"):
@@ -143,6 +148,12 @@ def load_prompt(skill: str, command: str, locale: str = "en") -> dict:
         params.append(current_param)
     if params:
         result["parameters"] = params
+
+    # Validate required fields are present
+    REQUIRED_FIELDS = {"name", "id", "description"}
+    missing = REQUIRED_FIELDS - set(result.keys())
+    if missing:
+        print(f"WARNING: Prompt file missing fields: {', '.join(sorted(missing))}", file=sys.stderr)
 
     return result
 
@@ -245,7 +256,7 @@ def call_ollama(system_prompt: str, user_message: str, model: str = None) -> str
     print(f"\n🤖 Calling Ollama ({model})...\n", file=sys.stderr)
 
     try:
-        resp = requests.post(url, json=payload, timeout=120)
+        resp = requests.post(url, json=payload, timeout=(10, 120))
         resp.raise_for_status()
     except requests.ConnectionError:
         print(f"ERROR: Cannot connect to Ollama at {OLLAMA_URL}")

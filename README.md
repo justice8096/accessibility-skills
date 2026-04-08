@@ -47,6 +47,8 @@ Each skill builds from a single `source/manifest.json` into 6 formats:
 
 Both skills support 10 locales: **en**, **es**, **fr**, **de**, **ja**, **zh**, **ar**, **pt**, **ko**, **hi**.
 
+These 10 locales were selected to cover the widest range of writing systems, numeral conventions, and reading directions with the fewest locale files. Together they represent approximately 4.5 billion native speakers across Latin, CJK, Devanagari, Arabic, and Hangul scripts. Each writing system introduces distinct accessibility challenges — for example, Arabic requires full RTL layout, CJK languages demand radical-level analysis instead of syllable segmentation, and Hindi/Korean require script-specific phonological rules. Including all three CJK locales (ja, zh, ko) is necessary because their learning disabilities manifest differently despite shared character heritage.
+
 Localization goes beyond string translation — each locale adapts to local conventions:
 
 - **Dyslexia**: Writing-system-specific confusion pairs, syllable rules, phonological patterns, and pedagogical approaches (e.g., radical analysis for Chinese, jamo segmentation for Korean)

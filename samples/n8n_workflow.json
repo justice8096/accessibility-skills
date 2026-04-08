@@ -16,6 +16,16 @@
     },
     {
       "parameters": {
+        "functionCode": "// Input validation to prevent expression injection and enforce allowlists\nconst VALID_SKILLS = ['dyslexia', 'dyscalculia'];\nconst VALID_COMMANDS = [\n  'text-simplification', 'reading-guide-generation', 'font-recommendation',\n  'syllable-highlighter', 'confusion-checker', 'vocabulary-builder',\n  'writing-scaffold', 'passage-decoder', 'context-enrichment',\n  'number-visualization', 'step-by-step-math', 'estimation-practice',\n  'range-comparison', 'proportion-waffle', 'trend-direction',\n  'difference-gap', 'elapsed-time'\n];\nconst VALID_LOCALES = ['en', 'es', 'fr', 'de', 'ja', 'zh', 'ar', 'pt', 'ko', 'hi'];\nconst EXPRESSION_RE = /\\{\\{.*?\\}\\}|\\$\\{.*?\\}/;\nconst MAX_INPUT = 50000;\n\nconst body = $input.first().json.body || {};\nconst skill = String(body.skill || '').toLowerCase();\nconst command = String(body.command || '').toLowerCase();\nconst input = String(body.input || '');\nconst locale = String(body.locale || 'en').toLowerCase();\nconst options = String(body.options || '');\n\nconst errors = [];\nif (!VALID_SKILLS.includes(skill)) errors.push('Invalid skill: ' + skill);\nif (!VALID_COMMANDS.includes(command)) errors.push('Invalid command: ' + command);\nif (!VALID_LOCALES.includes(locale)) errors.push('Invalid locale: ' + locale);\nif (input.length > MAX_INPUT) errors.push('Input exceeds max length');\nif (EXPRESSION_RE.test(input)) errors.push('Input contains template expressions');\nif (EXPRESSION_RE.test(options)) errors.push('Options contains template expressions');\n\nif (errors.length > 0) {\n  throw new Error('Validation failed: ' + errors.join('; '));\n}\n\nreturn [{ json: { body: { skill, command, input, locale, options, model: body.model } } }];"
+      },
+      "id": "input-validator",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [350, 300]
+    },
+    {
+      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": false
@@ -36,7 +46,7 @@
       "name": "Route by Skill",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [560, 300]
     },
     {
       "parameters": {
@@ -159,6 +169,13 @@
   ],
   "connections": {
     "Webhook Trigger": {
+      "main": [
+        [
+          { "node": "Validate Input", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Validate Input": {
       "main": [
         [
           { "node": "Route by Skill", "type": "main", "index": 0 }

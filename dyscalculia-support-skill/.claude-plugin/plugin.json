@@ -1,0 +1,8 @@
+{
+  "name": "dyscalculia-support-skill",
+  "description": "8 accessibility commands for number visualization, math scaffolding, and spatial reasoning tailored to dyscalculic users. Grounded in the Concrete-Representational-Abstract (CRA) framework.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Justice"
+  }
+}

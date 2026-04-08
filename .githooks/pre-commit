@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Pre-commit hook: scan staged content for leaked secrets
+# Install: git config core.hooksPath .githooks
+# Works without external dependencies — pure grep/regex
+
+set -euo pipefail
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Patterns that match common secret formats
+# Each line: <label>|<extended-regex>
+SECRET_PATTERNS=(
+  "GitHub OAuth Token|gho_[A-Za-z0-9_]{36,}"
+  "GitHub PAT|ghp_[A-Za-z0-9_]{36,}"
+  "GitHub App Token|ghs_[A-Za-z0-9_]{36,}"
+  "GitHub Fine-Grained PAT|github_pat_[A-Za-z0-9_]{22,}"
+  "OpenAI API Key|sk-[A-Za-z0-9]{20,}"
+  "Anthropic API Key|sk-ant-[A-Za-z0-9_-]{20,}"
+  "AWS Access Key|AKIA[0-9A-Z]{16}"
+  "Generic Bearer Token|Bearer [A-Za-z0-9_/+=-]{20,}"
+  "Generic Private Key|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----"
+  "Connection String|mongodb(\+srv)?://[^ ]+:[^ ]+@"
+  "Slack Token|xox[baprs]-[A-Za-z0-9-]{10,}"
+)
+
+STAGED_DIFF=$(git diff --cached --diff-filter=d -U0 -- . ':!*.lock' ':!sbom.json' 2>/dev/null || true)
+
+if [ -z "$STAGED_DIFF" ]; then
+  exit 0
+fi
+
+FOUND=0
+
+for entry in "${SECRET_PATTERNS[@]}"; do
+  LABEL="${entry%%|*}"
+  PATTERN="${entry##*|}"
+
+  MATCHES=$(echo "$STAGED_DIFF" | grep -nE "^\+" | grep -E "$PATTERN" || true)
+  if [ -n "$MATCHES" ]; then
+    if [ "$FOUND" -eq 0 ]; then
+      echo -e "${RED}SECRET DETECTED — commit blocked${NC}"
+      echo ""
+    fi
+    echo -e "${RED}  [$LABEL]${NC}"
+    echo "$MATCHES" | head -3 | sed 's/^/    /'
+    echo ""
+    FOUND=1
+  fi
+done
+
+if [ "$FOUND" -ne 0 ]; then
+  echo "Remove or redact the secrets above, then try again."
+  echo "To bypass (NOT recommended): git commit --no-verify"
+  exit 1
+fi

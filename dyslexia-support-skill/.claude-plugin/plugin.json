@@ -1,0 +1,8 @@
+{
+  "name": "dyslexia-support-skill",
+  "description": "9 accessibility commands for reading support, text adaptation, and context enrichment tailored to dyslexic users. Grounded in reading science — phonological processing, orthographic mapping, and the contextual facilitation effect.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Justice"
+  }
+}

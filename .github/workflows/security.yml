@@ -1,0 +1,142 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [main, feature/*]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6am UTC
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - dyslexia-support-skill
+          - dyscalculia-support-skill
+          - n8n-nodes-accessibility
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: npm ci
+
+      - name: Run npm audit
+        working-directory: ${{ matrix.project }}
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+  sbom-generation:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - dyslexia-support-skill
+          - dyscalculia-support-skill
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CycloneDX
+        run: pip install cyclonedx-bom
+
+      - name: Generate SBOM
+        working-directory: ${{ matrix.project }}
+        run: cyclonedx-py environment -o sbom.json --of json
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-${{ matrix.project }}
+          path: ${{ matrix.project }}/sbom.json
+
+  python-security:
+    name: Python Sample Security
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r samples/requirements.txt
+
+      - name: Run pip audit
+        run: |
+          pip install pip-audit
+          pip-audit -r samples/requirements.txt
+
+  build-validation:
+    name: Build & Type Check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - dyslexia-support-skill
+          - dyscalculia-support-skill
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: npm install
+
+      - name: Type check
+        working-directory: ${{ matrix.project }}
+        run: npx tsc --noEmit
+
+      - name: Validate manifest
+        working-directory: ${{ matrix.project }}
+        run: npx tsx build.ts --validate-only
+
+      - name: Full build
+        working-directory: ${{ matrix.project }}
+        run: npx tsx build.ts --clean
+
+  n8n-node-build:
+    name: n8n Node Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: n8n-nodes-accessibility
+        run: npm install
+
+      - name: Type check
+        working-directory: n8n-nodes-accessibility
+        run: npx tsc --noEmit
+
+      - name: Compile
+        working-directory: n8n-nodes-accessibility
+        run: npx tsc

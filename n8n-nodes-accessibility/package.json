@@ -1,0 +1,46 @@
+{
+  "name": "n8n-nodes-accessibility",
+  "version": "1.0.0",
+  "description": "n8n community nodes for dyslexia and dyscalculia accessibility support powered by LLMs",
+  "author": "Justice",
+  "license": "MIT",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "accessibility",
+    "dyslexia",
+    "dyscalculia",
+    "a11y",
+    "ollama",
+    "openai"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/AccessibilitySkill/AccessibilitySkill.node.js"
+    ],
+    "credentials": [
+      "dist/credentials/OllamaApi.credentials.js"
+    ]
+  },
+  "main": "dist/nodes/AccessibilitySkill/AccessibilitySkill.node.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc && cp -r nodes/AccessibilitySkill/*.json dist/nodes/AccessibilitySkill/ 2>/dev/null || true",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justice8096/accessibility-skills.git",
+    "directory": "n8n-nodes-accessibility"
+  },
+  "devDependencies": {
+    "n8n-workflow": "1.72.0",
+    "@types/node": "20.19.39",
+    "typescript": "5.9.3"
+  }
+}

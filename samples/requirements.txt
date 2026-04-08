@@ -1,0 +1,6 @@
+# Python dependencies for accessibility skill samples
+# Pin versions for reproducible builds and supply chain security
+
+requests==2.32.3
+pyyaml==6.0.2
+openai==1.82.0

@@ -137,12 +137,40 @@ export class AccessibilitySkill implements INodeType {
 		const baseUrl = (credentials.baseUrl as string) || "http://localhost:11434";
 		const model = (credentials.model as string) || "llama3";
 
+		// Input validation helpers to prevent expression injection
+		const VALID_SKILLS = new Set(["dyslexia", "dyscalculia"]);
+		const VALID_COMMANDS = new Set(ALL_COMMANDS.map((c) => c.name));
+		const VALID_LOCALES = new Set(["en", "es", "fr", "de", "ja", "zh", "ar", "pt", "ko", "hi"]);
+		const MAX_INPUT_LENGTH = 50000;
+		const EXPRESSION_PATTERN = /\{\{.*?\}\}|\$\{.*?\}/;
+
 		for (let i = 0; i < items.length; i++) {
 			const skill = this.getNodeParameter("skill", i) as string;
 			const command = this.getNodeParameter("command", i) as string;
 			const inputText = this.getNodeParameter("inputText", i) as string;
 			const locale = this.getNodeParameter("locale", i) as string;
 			const options = this.getNodeParameter("options", i) as unknown as string;
+
+			// Validate inputs against allowlists
+			if (!VALID_SKILLS.has(skill)) {
+				throw new Error(`Invalid skill: "${skill}". Must be one of: ${[...VALID_SKILLS].join(", ")}`);
+			}
+			if (!VALID_COMMANDS.has(command)) {
+				throw new Error(`Invalid command: "${command}". Use a valid command name.`);
+			}
+			if (!VALID_LOCALES.has(locale)) {
+				throw new Error(`Invalid locale: "${locale}". Must be one of: ${[...VALID_LOCALES].join(", ")}`);
+			}
+			if (inputText.length > MAX_INPUT_LENGTH) {
+				throw new Error(`Input text exceeds maximum length of ${MAX_INPUT_LENGTH} characters.`);
+			}
+			// Detect and reject n8n expression injection attempts in user input
+			if (EXPRESSION_PATTERN.test(inputText)) {
+				throw new Error("Input text must not contain template expressions ({{ }} or ${ }).");
+			}
+			if (options && EXPRESSION_PATTERN.test(options)) {
+				throw new Error("Options must not contain template expressions ({{ }} or ${ }).");
+			}
 
 			const systemPrompt = buildSystemPrompt(skill, command);
 

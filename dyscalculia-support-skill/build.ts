@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "fs";
 import { resolve, dirname, basename } from "path";
 import { fileURLToPath } from "url";
+import { z } from "zod";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -166,10 +167,18 @@ function parseArgs(): CLIArgs {
 function stringifyYaml(obj: unknown, indent: number = 2): string {
   const lines: string[] = [];
 
+  // Characters that require quoting per YAML spec (section 7.3.3 / 9.1.2)
+  const YAML_NEEDS_QUOTING = /[\n:#{}'"\[\]{}&*!|>%@`?,\\]|^[-?]$/;
+
   function scalar(val: unknown): string {
     if (val === null || val === undefined) return "null";
+    if (typeof val === "boolean") return val ? "true" : "false";
+    if (typeof val === "number") return String(val);
     if (typeof val === "string") {
-      if (val.includes("\n") || val.includes(":") || val.includes("#") || val.includes("'")) {
+      if (val === "" || val === "null" || val === "true" || val === "false") {
+        return "'" + val + "'";
+      }
+      if (YAML_NEEDS_QUOTING.test(val)) {
         return "'" + val.replace(/'/g, "''") + "'";
       }
       return val;
@@ -247,7 +256,15 @@ function readMarkdown(filePath: string): string {
     let content = readFileSync(filePath, "utf-8");
     if (content.charCodeAt(0) === 0xfeff) { content = content.slice(1); }
     return content;
-  } catch { console.warn("Warning: Could not read " + filePath); return ""; }
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") {
+      console.warn("Warning: File not found: " + filePath);
+    } else {
+      console.warn("Warning: Could not read " + filePath + " (" + code + "): " + (err instanceof Error ? err.message : String(err)));
+    }
+    return "";
+  }
 }
 
 function log(message: string): void { console.log("[build] " + message); }
@@ -277,7 +294,11 @@ function loadLocaleStrings(locale: string): LocaleStrings | null {
   const localePath = resolve(__dirname, "source/i18n/" + safeLocale + ".json");
   try {
     return JSON.parse(readFileSync(localePath, "utf-8")) as LocaleStrings;
-  } catch {
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code !== "ENOENT") {
+      console.warn("Warning: Failed to parse locale file " + localePath + ": " + (err instanceof Error ? err.message : String(err)));
+    }
     return null;
   }
 }
@@ -336,7 +357,9 @@ function loadLocalizedSkillMarkdown(skillName: string, locale: string, config: I
   const safeName = sanitizeName(skillName, "skill name");
   if (config.localizedMarkdown && locale !== config.defaultLocale) {
     const localizedPath = resolve(__dirname, "source/i18n/" + safeLocale + "/skills/" + safeName + ".md");
-    try { return readFileSync(localizedPath, "utf-8"); } catch { /* fall through to default */ }
+    try { return readFileSync(localizedPath, "utf-8"); } catch {
+      log("No localized skill markdown for " + safeName + " (" + safeLocale + "), falling back to default");
+    }
   }
   return loadSkillMarkdown(skillName);
 }
@@ -346,7 +369,9 @@ function loadLocalizedCommandMarkdown(commandName: string, locale: string, confi
   const safeName = sanitizeName(commandName, "command name");
   if (config.localizedMarkdown && locale !== config.defaultLocale) {
     const localizedPath = resolve(__dirname, "source/i18n/" + safeLocale + "/commands/" + safeName + ".md");
-    try { return readFileSync(localizedPath, "utf-8"); } catch { /* fall through to default */ }
+    try { return readFileSync(localizedPath, "utf-8"); } catch {
+      log("No localized command markdown for " + safeName + " (" + safeLocale + "), falling back to default");
+    }
   }
   return loadCommandMarkdown(commandName);
 }
@@ -355,25 +380,89 @@ function loadLocalizedCommandMarkdown(commandName: string, locale: string, confi
 // LOAD AND VALIDATE
 // ============================================================================
 
+// ============================================================================
+// MANIFEST SCHEMA VALIDATION (Zod)
+// ============================================================================
+
+const ParameterPropertySchema = z.object({
+  type: z.enum(["string", "number", "integer", "boolean", "array", "object"]),
+  description: z.string().min(1, "Parameter description must not be empty"),
+  default: z.union([z.string(), z.number(), z.boolean()]).optional(),
+  items: z.object({ type: z.string() }).optional(),
+});
+
+const CommandParametersSchema = z.object({
+  type: z.literal("object"),
+  properties: z.record(z.string(), ParameterPropertySchema).refine((props) => Object.keys(props).length > 0, {
+    message: "Command must have at least one parameter",
+  }),
+  required: z.array(z.string()).default([]),
+});
+
+const CommandSchema = z.object({
+  name: z.string().regex(/^[a-z][a-z0-9-]*$/, "Command name must be lowercase kebab-case"),
+  displayName: z.string().min(1),
+  description: z.string().min(10, "Command description must be at least 10 characters"),
+  path: z.string().min(1),
+  parameters: CommandParametersSchema,
+  keywords: z.array(z.string()).default([]),
+});
+
+const SkillSchema = z.object({
+  name: z.string().regex(/^[a-z][a-z0-9-]*$/, "Skill name must be lowercase kebab-case"),
+  displayName: z.string().min(1),
+  description: z.string().min(10, "Skill description must be at least 10 characters"),
+  path: z.string().min(1),
+  keywords: z.array(z.string()).default([]),
+});
+
+const TemplateSchema = z.object({
+  name: z.string().min(1),
+  displayName: z.string().min(1),
+  description: z.string().min(1),
+  path: z.string().min(1),
+});
+
+const MetadataSchema = z.object({
+  name: z.string().min(1),
+  version: z.string().regex(/^\d+\.\d+\.\d+/, "Version must be semver format (e.g. 1.0.0)"),
+  description: z.string().min(10),
+  author: z.string().min(1),
+  license: z.string().min(1),
+  repository: z.string().optional(),
+  keywords: z.array(z.string()).default([]),
+});
+
+const I18nConfigSchema = z.object({
+  defaultLocale: z.string().regex(/^[a-z]{2}(-[A-Z]{2})?$/),
+  locales: z.array(z.string().regex(/^[a-z]{2}(-[A-Z]{2})?$/)),
+  fallbackStrategy: z.enum(["default", "key"]).optional(),
+  localizedMarkdown: z.boolean().optional(),
+});
+
+const ManifestSchema = z.object({
+  metadata: MetadataSchema,
+  skills: z.array(SkillSchema).min(1, "Must have at least one skill"),
+  commands: z.array(CommandSchema).min(1, "Must have at least one command"),
+  templates: z.array(TemplateSchema).default([]),
+  i18n: I18nConfigSchema.optional(),
+});
+
 function loadManifest(): Manifest {
   log("Loading manifest.json...");
   const manifestPath = resolve(__dirname, "source/manifest.json");
   const raw = JSON.parse(readFileSync(manifestPath, "utf-8"));
-  if (!raw.metadata || !raw.metadata.name || !raw.metadata.version) {
-    throw new Error("Manifest missing required metadata fields (name, version)");
+
+  // Validate with Zod schema
+  const result = ManifestSchema.safeParse(raw);
+  if (!result.success) {
+    const issues = result.error.issues.map((i) => `  - ${i.path.join(".")}: ${i.message}`).join("\n");
+    throw new Error("Manifest validation failed:\n" + issues);
   }
-  if (!Array.isArray(raw.commands) || raw.commands.length === 0) {
-    throw new Error("Manifest must have at least one command");
-  }
-  if (!Array.isArray(raw.skills)) { throw new Error("Manifest must have a skills array"); }
-  if (!Array.isArray(raw.templates)) { raw.templates = []; }
-  for (const cmd of raw.commands) {
-    if (!cmd.parameters || !cmd.parameters.properties) {
-      throw new Error(`Command "${cmd.name}" missing JSON Schema parameters`);
-    }
-  }
-  logSuccess("Manifest loaded (" + raw.commands.length + " commands, " + raw.skills.length + " skills)");
-  return raw as Manifest;
+
+  const manifest = result.data as unknown as Manifest;
+  logSuccess("Manifest loaded and validated (" + manifest.commands.length + " commands, " + manifest.skills.length + " skills)");
+  return manifest;
 }
 
 function loadSkillMarkdown(skillName: string): string {

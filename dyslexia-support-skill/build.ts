@@ -137,45 +137,76 @@ function parseArgs(): CLIArgs {
 // ============================================================================
 
 function stringifyYaml(obj: unknown, indent: number = 2): string {
-  function stringify(val: unknown, depth: number = 0): string {
-    const spaces = " ".repeat(depth * indent);
+  const lines: string[] = [];
+
+  function scalar(val: unknown): string {
     if (val === null || val === undefined) return "null";
     if (typeof val === "string") {
-      if (val.includes("\n") || val.includes(":") || val.includes("#")) {
+      if (val.includes("\n") || val.includes(":") || val.includes("#") || val.includes("'")) {
         return "'" + val.replace(/'/g, "''") + "'";
       }
       return val;
     }
-    if (typeof val === "number" || typeof val === "boolean") return String(val);
-    if (Array.isArray(val)) {
-      if (val.length === 0) return "[]";
-      const items: string[] = [];
-      for (const item of val) {
-        const rendered = stringify(item, depth + 1);
-        items.push(spaces + "- " + rendered);
-      }
-      return items.join("\n");
-    }
-    if (typeof val === "object") {
-      const entries = Object.entries(val);
-      if (entries.length === 0) return "{}";
-      const items: string[] = [];
-      const childSpaces = " ".repeat((depth + 1) * indent);
-      for (const [key, value] of entries) {
-        if (typeof value === "object" && value !== null) {
-          items.push(spaces + key + ":");
-          const nested = stringify(value, depth + 1);
-          for (const line of nested.split("\n")) {
-            if (line.trimStart().startsWith("-")) { items.push(line); }
-            else { items.push(childSpaces + line); }
-          }
-        } else { items.push(spaces + key + ": " + stringify(value, depth + 1)); }
-      }
-      return items.join("\n");
-    }
     return String(val);
   }
-  return stringify(obj);
+
+  function isScalar(val: unknown): boolean {
+    return val === null || val === undefined || typeof val !== "object";
+  }
+
+  function emitValue(val: unknown, depth: number): void {
+    if (isScalar(val)) { lines.push(scalar(val)); return; }
+    if (Array.isArray(val)) { emitArray(val, depth); return; }
+    emitObject(val as Record<string, unknown>, depth);
+  }
+
+  function emitArray(arr: unknown[], depth: number): void {
+    if (arr.length === 0) { lines.push("[]"); return; }
+    const pad = " ".repeat(depth * indent);
+    for (const item of arr) {
+      if (isScalar(item)) {
+        lines.push(pad + "- " + scalar(item));
+      } else if (Array.isArray(item)) {
+        lines.push(pad + "-");
+        emitArray(item, depth + 1);
+      } else {
+        const entries = Object.entries(item as Record<string, unknown>);
+        if (entries.length === 0) { lines.push(pad + "- {}"); continue; }
+        const [firstKey, firstVal] = entries[0];
+        if (isScalar(firstVal)) {
+          lines.push(pad + "- " + firstKey + ": " + scalar(firstVal));
+        } else {
+          lines.push(pad + "- " + firstKey + ":");
+          emitValue(firstVal, depth + 2);
+        }
+        for (let i = 1; i < entries.length; i++) {
+          emitKeyValue(entries[i][0], entries[i][1], depth + 1);
+        }
+      }
+    }
+  }
+
+  function emitObject(obj: Record<string, unknown>, depth: number): void {
+    const entries = Object.entries(obj);
+    if (entries.length === 0) { lines.push("{}"); return; }
+    for (const [key, value] of entries) { emitKeyValue(key, value, depth); }
+  }
+
+  function emitKeyValue(key: string, value: unknown, depth: number): void {
+    const pad = " ".repeat(depth * indent);
+    if (isScalar(value)) {
+      lines.push(pad + key + ": " + scalar(value));
+    } else {
+      lines.push(pad + key + ":");
+      if (Array.isArray(value)) { emitArray(value, depth + 1); }
+      else { emitObject(value as Record<string, unknown>, depth + 1); }
+    }
+  }
+
+  if (typeof obj === "object" && obj !== null && !Array.isArray(obj)) {
+    emitObject(obj as Record<string, unknown>, 0);
+  } else { emitValue(obj, 0); }
+  return lines.join("\n");
 }
 
 // ============================================================================

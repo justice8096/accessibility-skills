@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "Habilidad de Apoyo para Discalculia",
+    "description": "Herramientas de accesibilidad para sentido numérico, visualización matemática y soporte de cálculo paso a paso. Usa coma decimal y punto para miles según la notación hispana"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "Apoyo para Discalculia",
+      "description": "Conocimiento sobre discalculia, desafíos de procesamiento numérico, dificultades de subitización, razonamiento espacial e intervenciones basadas en evidencia. Respeta la coma decimal (3,14) y el punto de miles (1.000) de la notación hispanohablante, y el sistema métrico"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "Visualización de Números",
+      "description": "Crea representaciones visuales de números y relaciones matemáticas usando modelos concretos. Usa notación hispana con coma decimal (ej: 3,14) y punto para miles (ej: 1.000)",
+      "parameters": {
+        "expression": {
+          "description": "El número o expresión matemática a visualizar (con coma decimal, ej: 3,14)"
+        },
+        "model_type": {
+          "description": "Modelo de visualización (recta numérica, modelo de área, bloques base diez, barra de fracciones, gráfico circular)"
+        },
+        "include_labels": {
+          "description": "Si incluir etiquetas descriptivas y anotaciones en español"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "Matemáticas Paso a Paso",
+      "description": "Desglosa un problema matemático en pasos explícitos y guiados con explicaciones en lenguaje sencillo. Usa convenciones de notación hispana (coma decimal, × para multiplicación)",
+      "parameters": {
+        "problem": {
+          "description": "El problema matemático a resolver paso a paso"
+        },
+        "difficulty_level": {
+          "description": "Nivel de andamiaje (básico＝1.°–2.° primaria, intermedio＝3.°–6.° primaria, avanzado＝secundaria ESO)"
+        },
+        "show_check": {
+          "description": "Si incluir un paso de comprobación al final"
+        },
+        "use_analogies": {
+          "description": "Si incluir ejemplos cotidianos (compras en euros/pesos, distancias en km) para conceptos abstractos"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "Práctica de Estimación",
+      "description": "Genera ejercicios de estimación que desarrollan el sentido numérico usando contextos cotidianos con euros/pesos, kilómetros y el sistema métrico",
+      "parameters": {
+        "topic": {
+          "description": "Área temática (dinero (euros/pesos), tiempo, distancia (kilómetros), peso (gramos/kilogramos), cantidad)"
+        },
+        "difficulty": {
+          "description": "Nivel de dificultad (principiante, intermedio, avanzado)"
+        },
+        "count": {
+          "description": "Número de ejercicios a generar"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "Comparación de Rangos",
+      "description": "Compara dos o más conjuntos de datos visualmente usando barras de rango simplificadas con marcadores de valor central, diseñadas para evitar la sobrecarga cognitiva de comparar estadísticas numéricamente. Usa notación con coma decimal (ej: 3,14)",
+      "parameters": {
+        "datasets": {
+          "description": "Conjuntos de datos a comparar, cada uno como 'Etiqueta: mín-máx, centro' (ej: 'Clase A: 40-95, 72'). El valor central puede ser media, mediana o moda."
+        },
+        "center_type": {
+          "description": "Qué representa el marcador central (media, mediana, moda)"
+        },
+        "show_numbers": {
+          "description": "Si mostrar el valor central como número junto al marcador (falso = comparación puramente visual)"
+        },
+        "context": {
+          "description": "Contexto opcional (ej: 'notas de examen', 'temperaturas en °C', 'precios en euros')"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "Cuadrícula de Proporciones",
+      "description": "Visualiza proporciones y porcentajes usando una cuadrícula de cuadrados contables en lugar de gráficos circulares, haciendo las relaciones parte-todo concretas y contables",
+      "parameters": {
+        "items": {
+          "description": "Proporciones a mostrar, cada una como 'Etiqueta: valor' (ej: 'Aprobados: 72%', 'Chicos: 15 de 30'). Acepta porcentajes, fracciones o formato 'X de Y'."
+        },
+        "total": {
+          "description": "El total del que forman parte las proporciones (predeterminado: autodetectar o 100 para porcentajes)"
+        },
+        "grid_size": {
+          "description": "Dimensión de la cuadrícula (predeterminado 10 = 10×10 = 100 cuadrados). Usa 5 para visuales más simples con estudiantes jóvenes."
+        },
+        "side_by_side": {
+          "description": "Si mostrar múltiples proporciones como cuadrículas separadas lado a lado para comparar"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "Dirección de Tendencia",
+      "description": "Muestra si los valores suben, bajan o se mantienen estables usando indicadores direccionales simplificados y minigráficos opcionales, sin requerir lectura de ejes",
+      "parameters": {
+        "series": {
+          "description": "Series de datos como 'Etiqueta: v1, v2, v3, ...' (ej: 'Notas semanales: 6,5; 7,0; 6,8; 7,5; 8,0'). Se necesitan al menos 3 valores."
+        },
+        "show_sparkline": {
+          "description": "Si mostrar una mini curva de tendencia junto a la flecha direccional (sin ejes, solo la forma)"
+        },
+        "sensitivity": {
+          "description": "Cuánto cambio cuenta como tendencia vs. estable (estricto, moderado, flexible)"
+        },
+        "context": {
+          "description": "Contexto opcional para el resumen (ej: 'notas de exámenes de matemáticas en 6 semanas')"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "Brecha de Diferencia",
+      "description": "Visualiza la diferencia entre dos valores como una barra de brecha explícita, haciendo visible 'cuánto más o menos' sin requerir resta mental",
+      "parameters": {
+        "value_a": {
+          "description": "Primer valor con etiqueta (ej: 'Mi nota: 7,2')"
+        },
+        "value_b": {
+          "description": "Segundo valor con etiqueta (ej: 'Media de clase: 6,5')"
+        },
+        "show_gap_value": {
+          "description": "Si etiquetar la brecha con la diferencia numérica (falso = solo mostrar la brecha visual)"
+        },
+        "context": {
+          "description": "Contexto opcional para la comparación (ej: 'puntos', 'centímetros', 'euros')"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "Tiempo Transcurrido",
+      "description": "Calcula y visualiza el tiempo entre dos puntos usando una barra de línea temporal, evitando la aritmética mental en base 60 con valores de reloj",
+      "parameters": {
+        "start_time": {
+          "description": "Hora de inicio (ej: '10:45', '14:00'). España usa formato 24h; Latinoamérica usa ambos."
+        },
+        "end_time": {
+          "description": "Hora de fin (ej: '12:20', '16:15')"
+        },
+        "show_clock_faces": {
+          "description": "Si mostrar diagramas de esferas de reloj simples en los puntos de inicio y fin"
+        },
+        "break_into_steps": {
+          "description": "Si desglosar el tiempo transcurrido en bloques de horas y minutos visualmente"
+        }
+      }
+    }
+  }
+}

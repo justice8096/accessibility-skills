@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "Dyskalkulie-Unterstützung",
+    "description": "Barrierefreiheitswerkzeuge für Zahlensinn, Mathematik-Visualisierung und schrittweise Rechenunterstützung für Nutzer mit Dyskalkulie (Rechenschwäche). Verwendet Dezimalkomma und Tausenderpunkt gemäß deutscher Notation"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "Dyskalkulie-/Rechenschwäche-Unterstützung",
+      "description": "Wissen über Dyskalkulie (Rechenschwäche, Rechenstörung, Arithmasthenie), Zahlenverarbeitungsprobleme, Subitisierungsschwierigkeiten und evidenzbasierte Interventionen. Berücksichtigt das deutsche Dezimalkomma (3,14) und den Tausenderpunkt (1.000) sowie das metrische System"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "Zahlenvisualisierung",
+      "description": "Erstellt visuelle Darstellungen von Zahlen und mathematischen Beziehungen mit konkreten Modellen. Verwendet deutsche Zahlendarstellung mit Dezimalkomma (z.B. 3,14) und Tausenderpunkt (z.B. 1.000)",
+      "parameters": {
+        "expression": {
+          "description": "Die Zahl oder der mathematische Ausdruck zur Visualisierung (mit Dezimalkomma, z.B. 3,14)"
+        },
+        "model_type": {
+          "description": "Visualisierungsmodell (Zahlenstrahl, Flächenmodell, Zehnersystem-Blöcke, Bruchbalken, Kreisdiagramm)"
+        },
+        "include_labels": {
+          "description": "Ob beschreibende Beschriftungen und Anmerkungen in deutscher Sprache enthalten sein sollen"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "Schritt-für-Schritt-Rechnen",
+      "description": "Zerlegt eine Rechenaufgabe in explizite, angeleitete Schritte mit verständlichen Erklärungen. Verwendet deutsche Rechenzeichen (z.B. Divisionszeichen ÷ statt /) und Dezimalkomma",
+      "parameters": {
+        "problem": {
+          "description": "Die Rechenaufgabe, die schrittweise gelöst werden soll"
+        },
+        "difficulty_level": {
+          "description": "Unterstützungsniveau (grundlegend＝Grundschule Kl. 1–2, mittel＝Grundschule Kl. 3–4, fortgeschritten＝Sekundarstufe I)"
+        },
+        "show_check": {
+          "description": "Ob ein Überprüfungsschritt (Probe) am Ende enthalten sein soll"
+        },
+        "use_analogies": {
+          "description": "Ob Alltagsbeispiele (Einkaufen in Euro, Entfernungen in km) für abstrakte Konzepte enthalten sein sollen"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "Schätzübungen",
+      "description": "Erzeugt Schätzübungen, die den Zahlensinn mit Alltagskontexten aufbauen. Verwendet Euro-Beträge, Kilometer, Kilogramm und das metrische System",
+      "parameters": {
+        "topic": {
+          "description": "Themenbereich für Schätzübungen (Geld (Euro), Zeit, Entfernung (Kilometer), Gewicht (Gramm/Kilogramm), Menge)"
+        },
+        "difficulty": {
+          "description": "Schwierigkeitsgrad (Anfänger, Mittelstufe, Fortgeschritten)"
+        },
+        "count": {
+          "description": "Anzahl der zu erstellenden Übungen"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "Bereichsvergleich",
+      "description": "Vergleicht zwei oder mehr Datensätze visuell mit vereinfachten Bereichsbalken und Zentralwert-Markern, um die kognitive Belastung des numerischen Statistikvergleichs zu vermeiden. Verwendet Dezimalkomma (z.B. 3,14) und Tausenderpunkt (z.B. 1.000)",
+      "parameters": {
+        "datasets": {
+          "description": "Zu vergleichende Datensätze, jeweils als 'Bezeichnung: Min-Max, Zentrum' (z.B. 'Klasse A: 40-95, 72'). Der Zentralwert kann Mittelwert, Median oder Modus sein."
+        },
+        "center_type": {
+          "description": "Was der Zentralwert-Marker darstellt (Mittelwert, Median, Modus)"
+        },
+        "show_numbers": {
+          "description": "Ob der Zentralwert als Zahl neben dem Marker angezeigt werden soll (falsch = rein visueller Vergleich)"
+        },
+        "context": {
+          "description": "Optionaler Kontext (z.B. 'Testergebnisse', 'Temperaturen in °C', 'Preise in Euro')"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "Proportions-Gitter",
+      "description": "Visualisiert Anteile und Prozentsätze mit einem Gitter aus zählbaren Quadraten statt Kreisdiagrammen, sodass Teil-Ganzes-Beziehungen konkret und zählbar werden",
+      "parameters": {
+        "items": {
+          "description": "Anzuzeigende Anteile, jeweils als 'Bezeichnung: Wert' (z.B. 'Bestanden: 72%', 'Jungen: 15 von 30'). Akzeptiert Prozente, Brüche oder 'X von Y'-Format."
+        },
+        "total": {
+          "description": "Das Ganze, von dem die Anteile ein Teil sind (Standard: automatische Erkennung oder 100 für Prozente)"
+        },
+        "grid_size": {
+          "description": "Gitterdimension (Standard 10 = 10×10 = 100 Quadrate). Verwenden Sie 5 für einfachere Darstellungen bei jüngeren Lernenden."
+        },
+        "side_by_side": {
+          "description": "Ob mehrere Anteile als separate Gitter nebeneinander zum Vergleich angezeigt werden sollen"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "Trendrichtung",
+      "description": "Zeigt, ob Werte steigen, fallen oder stabil bleiben, mit vereinfachten Richtungspfeilen und optionalen Mini-Grafiken, ohne Achsenablesung zu erfordern",
+      "parameters": {
+        "series": {
+          "description": "Datenreihen als 'Bezeichnung: w1, w2, w3, ...' (z.B. 'Wochennoten: 6,5; 7,0; 6,8; 7,5; 8,0'). Mindestens 3 Werte erforderlich."
+        },
+        "show_sparkline": {
+          "description": "Ob eine Mini-Trendkurve neben dem Richtungspfeil angezeigt werden soll (ohne Achsen, nur die Form)"
+        },
+        "sensitivity": {
+          "description": "Wie viel Veränderung als Trend vs. stabil gilt (streng, moderat, locker)"
+        },
+        "context": {
+          "description": "Optionaler Kontext für die Zusammenfassung (z.B. 'Mathe-Quiznoten über 6 Wochen')"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "Differenz-Lücke",
+      "description": "Visualisiert den Unterschied zwischen zwei Werten als explizite Lückenleiste, sodass 'wie viel mehr oder weniger' sichtbar wird, ohne mentale Subtraktion zu erfordern",
+      "parameters": {
+        "value_a": {
+          "description": "Erster Wert mit Bezeichnung (z.B. 'Meine Note: 7,2')"
+        },
+        "value_b": {
+          "description": "Zweiter Wert mit Bezeichnung (z.B. 'Klassendurchschnitt: 6,5')"
+        },
+        "show_gap_value": {
+          "description": "Ob die Lücke mit der numerischen Differenz beschriftet werden soll (falsch = nur visuelle Lücke zeigen)"
+        },
+        "context": {
+          "description": "Optionaler Kontext für den Vergleich (z.B. 'Punkte', 'Zentimeter', 'Euro')"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "Verstrichene Zeit",
+      "description": "Berechnet und visualisiert die Zeit zwischen zwei Zeitpunkten mit einer Zeitleiste, um mentale Basis-60-Arithmetik bei Uhrzeitwerten zu umgehen",
+      "parameters": {
+        "start_time": {
+          "description": "Startzeit (z.B. '10:45 Uhr', '14:00 Uhr'). Deutschland verwendet 24-Stunden-Format mit 'Uhr'."
+        },
+        "end_time": {
+          "description": "Endzeit (z.B. '12:20 Uhr', '16:15 Uhr')"
+        },
+        "show_clock_faces": {
+          "description": "Ob einfache Zifferblatt-Diagramme an Start- und Endpunkten angezeigt werden sollen"
+        },
+        "break_into_steps": {
+          "description": "Ob die verstrichene Zeit visuell in Stunden- und Minutenblöcke aufgeteilt werden soll"
+        }
+      }
+    }
+  }
+}

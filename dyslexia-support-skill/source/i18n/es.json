@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "name": "Habilidad de Apoyo para Dislexia",
+    "description": "Herramientas de accesibilidad para apoyo a la lectura, simplificación de texto y recomendaciones de fuentes adaptadas a usuarios disléxicos"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "Apoyo para Dislexia",
+      "description": "Conocimiento sobre dislexia, dificultades de lectura, procesamiento fonológico, estrategias de adaptación e intervenciones basadas en evidencia para accesibilidad textual"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "Simplificación de Texto",
+      "description": "Simplifica el texto para mejorar la legibilidad reduciendo la complejidad de las oraciones, reemplazando palabras difíciles y reestructurando párrafos para lectores disléxicos",
+      "parameters": {
+        "text": {
+          "description": "El texto a simplificar"
+        },
+        "reading_level": {
+          "description": "Nivel de lectura objetivo (elemental, secundaria-baja, secundaria-alta, adulto)"
+        },
+        "preserve_meaning": {
+          "description": "Si se debe preservar estrictamente el significado original o permitir parafraseo"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "Generación de Guía de Lectura",
+      "description": "Genera una guía de lectura estructurada con secciones fragmentadas, vista previa de vocabulario y puntos de verificación de comprensión",
+      "parameters": {
+        "document": {
+          "description": "El contenido del documento o ruta para generar una guía"
+        },
+        "chunk_size": {
+          "description": "Tamaño de cada fragmento de lectura (párrafo, sección, página)"
+        },
+        "include_vocabulary": {
+          "description": "Si incluir vista previa de vocabulario para palabras difíciles"
+        },
+        "include_checkpoints": {
+          "description": "Si agregar puntos de verificación de comprensión después de cada fragmento"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "Recomendación de Fuentes",
+      "description": "Recomienda fuentes y configuraciones de formato amigables para disléxicos según el contexto de lectura",
+      "parameters": {
+        "context": {
+          "description": "El contexto de lectura (web, impresión, móvil, ebook, presentación)"
+        },
+        "age_group": {
+          "description": "Grupo de edad del lector (niño, adolescente, adulto)"
+        },
+        "include_formatting": {
+          "description": "Si incluir recomendaciones de espaciado, márgenes y colores"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "Resaltador de Sílabas",
+      "description": "Divide palabras en sílabas con código de color para apoyar la decodificación fonológica, con marcas de acento y límites de morfemas para palabras polisílabas",
+      "parameters": {
+        "text": {
+          "description": "La palabra o pasaje para silabear"
+        },
+        "highlight_mode": {
+          "description": "Cómo marcar los límites de sílabas (colores alternados, subrayado, separado por guion, numerado)"
+        },
+        "show_stress": {
+          "description": "Si marcar la sílaba tónica (negrita o tilde). Nota: el español ya usa tildes ortográficas."
+        },
+        "show_morphemes": {
+          "description": "Si marcar adicionalmente los límites de prefijo, raíz y sufijo"
+        }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "Verificador de Confusiones",
+      "description": "Escanea texto buscando confusiones comunes en español: b/v, ll/y (yeísmo), s/c/z (seseo), y homófonos, proporcionando pistas visuales de desambiguación",
+      "parameters": {
+        "text": {
+          "description": "El texto a revisar en busca de elementos confundibles"
+        },
+        "check_types": {
+          "description": "Qué revisar (todo, confusiones de letras, palabras invertidas, homófonos)"
+        },
+        "show_mnemonics": {
+          "description": "Si incluir trucos de memoria visual para cada confusión detectada"
+        },
+        "context_aware": {
+          "description": "Si usar el contexto de la oración para sugerir la opción correcta"
+        }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "Constructor de Vocabulario",
+      "description": "Crea mapas de palabras visuales con desglose de morfemas (prefijo/raíz/sufijo), etimología, familias de palabras y mnemotécnicos para construir vocabulario a través del significado",
+      "parameters": {
+        "words": {
+          "description": "Lista de palabras separadas por comas para crear mapas de vocabulario"
+        },
+        "include_etymology": {
+          "description": "Si incluir el origen de la palabra y su significado histórico (latín, griego, árabe)"
+        },
+        "include_word_family": {
+          "description": "Si mostrar palabras relacionadas que comparten la misma raíz"
+        },
+        "include_mnemonic": {
+          "description": "Si generar una ayuda de memoria visual o basada en una historia"
+        },
+        "reading_level": {
+          "description": "Nivel de complejidad (primaria, secundaria ESO, bachillerato, adulto)"
+        }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "Andamiaje de Escritura",
+      "description": "Genera marcos de escritura estructurados con inicios de oración, bancos de conectores, plantillas de párrafo y organizadores gráficos para apoyar la expresión escrita",
+      "parameters": {
+        "task": {
+          "description": "Descripción de la tarea de escritura (ej: 'ensayo persuasivo sobre el reciclaje', 'reseña de un libro en 3 párrafos')"
+        },
+        "format": {
+          "description": "Formato de escritura (ensayo, párrafo, carta, informe, cuento, correo electrónico)"
+        },
+        "include_starters": {
+          "description": "Si incluir sugerencias de inicios de oración para cada sección"
+        },
+        "include_transitions": {
+          "description": "Si incluir un banco de conectores organizados por función (adición, contraste, conclusión, etc.)"
+        },
+        "include_organizer": {
+          "description": "Si incluir un organizador gráfico (esquema, mapa mental o diagrama de flujo) para la planificación"
+        },
+        "reading_level": {
+          "description": "Nivel de vocabulario para inicios y conectores (primaria, secundaria ESO, bachillerato, adulto)"
+        }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "Decodificador de Pasajes",
+      "description": "Divide un pasaje de lectura en segmentos manejables con vocabulario previo, pistas de decodificación en línea, preguntas de comprensión por segmento y una plantilla de resumen acumulativo",
+      "parameters": {
+        "passage": {
+          "description": "El texto del pasaje a decodificar y estructurar"
+        },
+        "chunk_strategy": {
+          "description": "Cómo dividir el pasaje (oración, párrafo, corte natural)"
+        },
+        "pre_teach_count": {
+          "description": "Número de palabras difíciles a enseñar previamente antes de cada segmento (0 para omitir)"
+        },
+        "include_decoding_hints": {
+          "description": "Si agregar guías de pronunciación en línea para palabras difíciles (división silábica + deletreo fonético). Nota: el español tiene ortografía transparente, así que el enfoque es en significado."
+        },
+        "include_summary_scaffold": {
+          "description": "Si proporcionar una plantilla de resumen para completar después del pasaje completo"
+        }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "Enriquecimiento de Contexto",
+      "description": "Expande texto conciso añadiendo palabras y frases de apoyo semántico alrededor del vocabulario difícil, dando a los lectores disléxicos más pistas contextuales para decodificar palabras desconocidas — lo opuesto a la simplificación",
+      "parameters": {
+        "text": { "description": "El texto a enriquecer con apoyo contextual" },
+        "enrichment_level": { "description": "Cuánto contexto añadir (ligero = solo aposiciones, moderado = aposiciones + ecos semánticos, intenso = andamiaje contextual completo)" },
+        "target_words": { "description": "Lista opcional de palabras específicas a enriquecer, separadas por comas. Si se omite, detecta automáticamente los desafíos de decodificación." },
+        "preserve_register": { "description": "Si mantener el nivel de formalidad original del texto (verdadero) o cambiar hacia lenguaje conversacional (falso)" },
+        "show_annotations": { "description": "Si marcar visualmente las frases añadidas para contexto (corchetes o color) para que un profesor o padre pueda ver el enriquecimiento" }
+      }
+    }
+  }
+}

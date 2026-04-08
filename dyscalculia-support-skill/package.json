@@ -1,0 +1,28 @@
+{
+  "name": "dyscalculia-support-skill",
+  "version": "1.0.0",
+  "description": "Accessibility tools for number sense, math visualization, and step-by-step calculation support tailored to dyscalculic users",
+  "author": "Justice",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsx build.ts",
+    "build:claude": "tsx build.ts --format claude-plugin",
+    "build:openai": "tsx build.ts --format openai",
+    "build:n8n": "tsx build.ts --format n8n",
+    "build:mcp": "tsx build.ts --format mcp",
+    "build:prompts": "tsx build.ts --format prompts",
+    "build:cli": "tsx build.ts --format cli",
+    "build:locale": "tsx build.ts --locale",
+    "build:watch": "tsx --watch build.ts",
+    "clean": "rm -rf dist",
+    "validate": "tsx build.ts --validate-only",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "zod": "^3.22.4"
+  }
+}

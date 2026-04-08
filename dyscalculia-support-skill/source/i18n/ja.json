@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "算数障害支援スキル",
+    "description": "算数障害のユーザー向けの数感覚、数学の視覚化、段階的な計算サポートのアクセシビリティツール（そろばん・暗算を活用した支援を含む）"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "算数障害（ディスカリキュリア）支援",
+      "description": "算数障害（計算力障害）、数処理の課題、瞬間的把握（サビタイジング）の困難、空間推論に関する知識。そろばん（珠算）や暗算を活用した具体的・視覚的アプローチ、万進法に対応した位取り支援を含む"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "数の視覚化",
+      "description": "そろばん（珠算）モデル、数直線、面積モデルなどの具体的モデルを使用して、数・量・数学的関係の視覚的表現を作成。日本の万進法（万・億・兆）での位取りにも対応",
+      "parameters": {
+        "expression": {
+          "description": "視覚化する数値または数式"
+        },
+        "model_type": {
+          "description": "視覚化モデル（数直線、面積モデル、十進ブロック、分数バー、円グラフ）。日本ではそろばんモデルも利用可能"
+        },
+        "include_labels": {
+          "description": "説明ラベルと注釈を含めるかどうか（ふりがな付きオプションあり）"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "ステップバイステップ算数",
+      "description": "算数の問題を明示的なステップに分解し、平易な日本語で説明。筆算（ひっさん）の手順やそろばん式暗算の手法も活用可能",
+      "parameters": {
+        "problem": {
+          "description": "段階的に解く算数の問題"
+        },
+        "difficulty_level": {
+          "description": "足場レベル（基本＝小学校低学年、中級＝小学校高学年、上級＝中学校）"
+        },
+        "show_check": {
+          "description": "最後に検算ステップを含めるかどうか"
+        },
+        "use_analogies": {
+          "description": "抽象的な概念に日常生活のたとえ（買い物、時刻表など）を含めるかどうか"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "見積もり・概算練習",
+      "description": "日常的な場面（買い物、電車の時刻、距離）を使用して数感覚と概数の理解を育てる練習問題を生成。日本円での金額見積もりに対応",
+      "parameters": {
+        "topic": {
+          "description": "見積もり練習のトピック（お金（円）、時間、距離（キロメートル）、重さ（グラム・キログラム）、量）"
+        },
+        "difficulty": {
+          "description": "難易度（初級、中級、上級）"
+        },
+        "count": {
+          "description": "生成する練習問題の数"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "範囲比較",
+      "description": "2つ以上のデータセットを、中央値マーカー付きの簡略化された範囲バーで視覚的に比較します。数値での統計比較による認知的負荷を回避するために設計されています。日本の万進法（万・億）にも対応",
+      "parameters": {
+        "datasets": {
+          "description": "比較するデータセット。各データは「ラベル: 最小-最大, 中央値」の形式（例：「クラスA: 40-95, 72」）。中央値は平均値・中央値・最頻値のいずれか"
+        },
+        "center_type": {
+          "description": "中央マーカーが表すもの（平均値、中央値、最頻値）"
+        },
+        "show_numbers": {
+          "description": "マーカーの横に数値を表示するかどうか（false = 純粋に視覚的な比較）"
+        },
+        "context": {
+          "description": "オプションの文脈説明（例：「テストの点数」「気温（℃）」「価格（円）」）"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "割合ワッフルグリッド",
+      "description": "円グラフの代わりに数えられるマス目のグリッドを使って割合やパーセンテージを視覚化し、部分と全体の関係を具体的に把握できるようにします",
+      "parameters": {
+        "items": {
+          "description": "表示する割合。'ラベル: 値'形式（例：'合格: 72%'、'男子: 30人中15人'）。パーセント、分数、'XのうちY'形式に対応。"
+        },
+        "total": {
+          "description": "割合の母数となる全体（デフォルト：自動検出、パーセントの場合は100）"
+        },
+        "grid_size": {
+          "description": "グリッドの大きさ（デフォルト10 = 10×10 = 100マス）。低学年には5を使用。"
+        },
+        "side_by_side": {
+          "description": "複数の割合を並べて別々のグリッドとして表示するかどうか"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "傾向の方向",
+      "description": "値が上昇・下降・横ばいかを、軸の読み取り不要な簡略化された方向指示と任意のスパークラインで表示します",
+      "parameters": {
+        "series": {
+          "description": "データ系列。'ラベル: v1, v2, v3, ...'形式（例：'週間テスト: 65, 70, 68, 75, 80'）。3つ以上の値が必要。"
+        },
+        "show_sparkline": {
+          "description": "方向矢印の横にミニ傾向曲線を表示するかどうか（軸なし、形状のみ）"
+        },
+        "sensitivity": {
+          "description": "どの程度の変化を傾向とみなすか（厳格、普通、緩め）"
+        },
+        "context": {
+          "description": "要約の任意の文脈（例：'6週間の算数テストの点数'）"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "差のギャップ",
+      "description": "2つの値の差を明示的なギャップバーとして視覚化し、暗算での引き算なしに「どのくらい多い・少ない」を見えるようにします",
+      "parameters": {
+        "value_a": {
+          "description": "ラベル付きの1つ目の値（例：'自分の点数: 72'）"
+        },
+        "value_b": {
+          "description": "ラベル付きの2つ目の値（例：'クラス平均: 65'）"
+        },
+        "show_gap_value": {
+          "description": "ギャップに数値の差を表示するかどうか（falseの場合は視覚的なギャップのみ）"
+        },
+        "context": {
+          "description": "比較の任意の文脈（例：'点'、'センチメートル'、'円'）"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "経過時間",
+      "description": "タイムラインバーを使って2つの時刻間の時間を計算・視覚化し、60進法の暗算を不要にします",
+      "parameters": {
+        "start_time": {
+          "description": "開始時刻（例：'10:45'、'午後2:30'、'14:00'）。日本では24時間制が一般的。"
+        },
+        "end_time": {
+          "description": "終了時刻（例：'12:20'、'16:15'）"
+        },
+        "show_clock_faces": {
+          "description": "開始・終了時点にシンプルな時計の文字盤を表示するかどうか"
+        },
+        "break_into_steps": {
+          "description": "経過時間を時間と分のブロックに視覚的に分割するかどうか"
+        }
+      }
+    }
+  }
+}

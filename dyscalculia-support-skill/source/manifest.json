@@ -1,0 +1,273 @@
+{
+  "metadata": {
+    "name": "Dyscalculia Support Skill",
+    "version": "1.0.0",
+    "description": "Accessibility tools for number sense, math visualization, and step-by-step calculation support tailored to dyscalculic users",
+    "author": "Justice",
+    "license": "MIT",
+    "repository": "",
+    "keywords": ["dyscalculia", "accessibility", "math", "number-sense", "visualization", "a11y"]
+  },
+  "skills": [
+    {
+      "name": "dyscalculia-support",
+      "displayName": "Dyscalculia Support",
+      "description": "Knowledge about dyscalculia, number processing challenges, subitizing difficulties, spatial reasoning, and evidence-based interventions for mathematical accessibility",
+      "path": "skills/dyscalculia-support.md",
+      "keywords": ["dyscalculia", "math difficulty", "number sense", "calculation", "accessibility"]
+    }
+  ],
+  "commands": [
+    {
+      "name": "number-visualization",
+      "displayName": "Number Visualization",
+      "description": "Create visual representations of numbers, quantities, and mathematical relationships using concrete models, number lines, and area models",
+      "path": "commands/number-visualization.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "The number, quantity, or math expression to visualize"
+          },
+          "model_type": {
+            "type": "string",
+            "description": "Visualization model (number-line, area-model, base-ten-blocks, fraction-bar, pie-chart)",
+            "default": "number-line"
+          },
+          "include_labels": {
+            "type": "boolean",
+            "description": "Whether to include descriptive labels and annotations",
+            "default": true
+          }
+        },
+        "required": ["expression"]
+      },
+      "keywords": ["visualize", "number line", "area model", "concrete", "manipulatives"]
+    },
+    {
+      "name": "step-by-step-math",
+      "displayName": "Step-by-Step Math",
+      "description": "Break down a math problem into explicit, scaffolded steps with plain-language explanations and intermediate results at each stage",
+      "path": "commands/step-by-step-math.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "problem": {
+            "type": "string",
+            "description": "The math problem to solve step by step"
+          },
+          "difficulty_level": {
+            "type": "string",
+            "description": "Scaffolding level (basic, intermediate, advanced)",
+            "default": "basic"
+          },
+          "show_check": {
+            "type": "boolean",
+            "description": "Whether to include a verification/check step at the end",
+            "default": true
+          },
+          "use_analogies": {
+            "type": "boolean",
+            "description": "Whether to include real-world analogies for abstract concepts",
+            "default": true
+          }
+        },
+        "required": ["problem"]
+      },
+      "keywords": ["solve", "step by step", "scaffold", "explain", "walkthrough"]
+    },
+    {
+      "name": "estimation-practice",
+      "displayName": "Estimation Practice",
+      "description": "Generate estimation exercises that build number sense and magnitude awareness using everyday contexts",
+      "path": "commands/estimation-practice.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Topic area for estimation exercises (money, time, distance, weight, quantity)",
+            "default": "quantity"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level (beginner, intermediate, advanced)",
+            "default": "beginner"
+          },
+          "count": {
+            "type": "number",
+            "description": "Number of exercises to generate",
+            "default": 5
+          }
+        },
+        "required": []
+      },
+      "keywords": ["estimate", "number sense", "magnitude", "approximation", "mental math"]
+    },
+    {
+      "name": "range-comparison",
+      "displayName": "Range Comparison",
+      "description": "Compare two or more datasets visually using simplified range bars with central-value markers, designed to avoid the cognitive overload of comparing raw statistics numerically",
+      "path": "commands/range-comparison.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "datasets": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Datasets to compare, each as 'Label: min-max, center' (e.g., 'Class A: 40-95, 72'). Center value can be mean, median, or mode."
+          },
+          "center_type": {
+            "type": "string",
+            "description": "What the center marker represents (mean, median, mode)",
+            "default": "median"
+          },
+          "show_numbers": {
+            "type": "boolean",
+            "description": "Whether to annotate the center value as a number next to the marker (false = purely visual comparison)",
+            "default": false
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional real-world context to frame the comparison (e.g., 'test scores', 'temperatures in °C', 'prices in $')"
+          }
+        },
+        "required": ["datasets"]
+      },
+      "keywords": ["compare", "range", "bar", "statistics", "visual comparison", "mean", "median", "side by side"]
+    },
+    {
+      "name": "proportion-waffle",
+      "displayName": "Proportion Waffle",
+      "description": "Visualize proportions and percentages using a 10×10 waffle grid of countable squares instead of pie charts, making part-whole relationships concrete and subitizable",
+      "path": "commands/proportion-waffle.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Proportions to display, each as 'Label: value' (e.g., 'Passed: 72%', 'Boys: 15 out of 30'). Accepts percentages, fractions, or 'X out of Y' formats."
+          },
+          "total": {
+            "type": "number",
+            "description": "The whole that proportions are part of (default: auto-detect from input, or 100 for percentages)"
+          },
+          "grid_size": {
+            "type": "number",
+            "description": "Grid dimension (default 10 = 10×10 = 100 squares). Use 5 for simpler visuals with younger learners.",
+            "default": 10
+          },
+          "side_by_side": {
+            "type": "boolean",
+            "description": "Whether to show multiple proportions as separate grids side by side for comparison",
+            "default": true
+          }
+        },
+        "required": ["items"]
+      },
+      "keywords": ["proportion", "percentage", "fraction", "waffle", "grid", "part whole", "pie chart alternative"]
+    },
+    {
+      "name": "trend-direction",
+      "displayName": "Trend Direction",
+      "description": "Show whether values are rising, falling, or flat over time using simplified directional indicators and optional sparklines, without requiring axis reading",
+      "path": "commands/trend-direction.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Data series as 'Label: v1, v2, v3, ...' (e.g., 'Weekly scores: 65, 70, 68, 75, 80'). At least 3 values needed to determine trend."
+          },
+          "show_sparkline": {
+            "type": "boolean",
+            "description": "Whether to show a mini sparkline curve alongside the direction arrow (no axes, just shape)",
+            "default": true
+          },
+          "sensitivity": {
+            "type": "string",
+            "description": "How much change counts as a trend vs. flat (strict, moderate, loose)",
+            "default": "moderate"
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context for the plain-language summary (e.g., 'math quiz scores over 6 weeks')"
+          }
+        },
+        "required": ["series"]
+      },
+      "keywords": ["trend", "direction", "rising", "falling", "sparkline", "time series", "progress", "over time"]
+    },
+    {
+      "name": "difference-gap",
+      "displayName": "Difference Gap",
+      "description": "Visualize the difference between two values as an explicit gap bar, making 'how much more/less' visible without requiring mental subtraction",
+      "path": "commands/difference-gap.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "value_a": {
+            "type": "string",
+            "description": "First value with label (e.g., 'My score: 72')"
+          },
+          "value_b": {
+            "type": "string",
+            "description": "Second value with label (e.g., 'Class average: 65')"
+          },
+          "show_gap_value": {
+            "type": "boolean",
+            "description": "Whether to label the gap with the numeric difference (false = just show the visual gap)",
+            "default": true
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context for the comparison (e.g., 'points', 'centimeters', 'dollars')"
+          }
+        },
+        "required": ["value_a", "value_b"]
+      },
+      "keywords": ["difference", "gap", "subtract", "how much more", "how much less", "compare two"]
+    },
+    {
+      "name": "elapsed-time",
+      "displayName": "Elapsed Time",
+      "description": "Calculate and visualize the time between two points using a timeline bar, bypassing the need for mental base-60 arithmetic on clock values",
+      "path": "commands/elapsed-time.md",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "start_time": {
+            "type": "string",
+            "description": "Start time (e.g., '10:45', '2:30 PM', '14:00')"
+          },
+          "end_time": {
+            "type": "string",
+            "description": "End time (e.g., '12:20', '4:15 PM', '16:15')"
+          },
+          "show_clock_faces": {
+            "type": "boolean",
+            "description": "Whether to show simple clock face diagrams at start and end points",
+            "default": false
+          },
+          "break_into_steps": {
+            "type": "boolean",
+            "description": "Whether to break the elapsed time into hour and minute chunks visually (e.g., '1 hour + 35 minutes' shown as labeled segments)",
+            "default": true
+          }
+        },
+        "required": ["start_time", "end_time"]
+      },
+      "keywords": ["time", "clock", "elapsed", "duration", "how long", "time between", "hours minutes"]
+    }
+  ],
+  "templates": [],
+  "i18n": {
+    "defaultLocale": "en",
+    "locales": ["en", "es", "fr", "de", "ja", "zh", "ar", "pt", "ko", "hi"],
+    "fallbackStrategy": "default",
+    "localizedMarkdown": false
+  }
+}

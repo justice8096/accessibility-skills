@@ -1,0 +1,29 @@
+## Summary
+
+- Standardized manifest schema (metadata wrapper + JSON Schema parameters)
+- Domain-agnostic build.ts template generating 6 output formats
+- Reference docs for manifest schema and build template
+- Eval test cases with iteration 1 results (28/30 assertions passed)
+- Formats: Claude plugin, OpenAI functions, n8n node, YAML prompts, MCP server, standalone CLI
+- **Internationalization (i18n)**: Optional multi-locale build support with RTL detection
+  - `i18n` manifest field with `defaultLocale`, `locales`, `fallbackStrategy`, `localizedMarkdown`
+  - Locale translation files in `source/i18n/{locale}.json`
+  - Optional localized markdown in `source/i18n/{locale}/skills/` and `commands/`
+  - `--locale` CLI flag for single-locale builds
+  - Automatic RTL metadata for Arabic, Hebrew, Farsi, Urdu, Yiddish, Pashto, Sindhi
+  - All 6 format generators produce locale subdirectories
+
+## Test plan
+
+- [ ] Verify skill triggers on multi-format/build-system prompts
+- [ ] Test scaffold for new domain (e.g. ADHD support skill)
+- [ ] Test migration from old manifest format
+- [ ] Verify build.ts is domain-agnostic (no hardcoded strings)
+- [ ] Run npm build and confirm all 6 dist formats generate
+- [ ] Test i18n scaffold with multiple locales including RTL (Arabic)
+- [ ] Test adding i18n to existing project with localized markdown
+- [ ] Test single-locale build with --locale flag
+- [ ] Verify RTL locales produce direction metadata in all formats
+- [ ] Verify fallback to default locale for missing translations
+
+Generated with Claude Code

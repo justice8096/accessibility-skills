@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "name": "Compétence de Soutien à la Dyslexie",
+    "description": "Outils d'accessibilité pour le soutien à la lecture, la simplification de texte et les recommandations de polices adaptées aux utilisateurs dyslexiques"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "Soutien à la Dyslexie",
+      "description": "Connaissances sur la dyslexie, les difficultés de lecture, le traitement phonologique, les stratégies d'adaptation et les interventions fondées sur des données probantes"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "Simplification de Texte",
+      "description": "Simplifie le texte pour la lisibilité en réduisant la complexité des phrases et en remplaçant les mots difficiles",
+      "parameters": {
+        "text": {
+          "description": "Le texte à simplifier"
+        },
+        "reading_level": {
+          "description": "Niveau de lecture cible (élémentaire, collège, lycée, adulte)"
+        },
+        "preserve_meaning": {
+          "description": "Conserver strictement le sens original ou permettre la paraphrase"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "Génération de Guide de Lecture",
+      "description": "Génère un guide de lecture structuré avec des sections découpées, un aperçu du vocabulaire et des points de vérification de compréhension",
+      "parameters": {
+        "document": {
+          "description": "Le contenu du document pour lequel générer un guide"
+        },
+        "chunk_size": {
+          "description": "Taille de chaque section de lecture (paragraphe, section, page)"
+        },
+        "include_vocabulary": {
+          "description": "Inclure un aperçu du vocabulaire pour les mots difficiles"
+        },
+        "include_checkpoints": {
+          "description": "Ajouter des points de vérification de compréhension après chaque section"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "Recommandation de Polices",
+      "description": "Recommande des polices et des paramètres de mise en forme adaptés aux dyslexiques",
+      "parameters": {
+        "context": {
+          "description": "Le contexte de lecture (web, impression, mobile, ebook, présentation)"
+        },
+        "age_group": {
+          "description": "Groupe d'âge du lecteur (enfant, adolescent, adulte)"
+        },
+        "include_formatting": {
+          "description": "Inclure les recommandations d'espacement, de marges et de couleurs"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "Surlignage Syllabique",
+      "description": "Découpe les mots en syllabes avec code couleur pour soutenir le décodage phonologique, avec marques d'accentuation et limites de morphèmes",
+      "parameters": {
+        "text": {
+          "description": "Le mot ou passage à syllaber"
+        },
+        "highlight_mode": {
+          "description": "Comment marquer les limites de syllabes (couleurs alternées, souligné, séparé par tiret, numéroté)"
+        },
+        "show_stress": {
+          "description": "Si marquer la syllabe accentuée. Note : en français, l'accent tombe toujours sur la dernière syllabe prononcée."
+        },
+        "show_morphemes": {
+          "description": "Si marquer en plus les limites de préfixe, racine et suffixe"
+        }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "Vérificateur de Confusions",
+      "description": "Analyse le texte pour détecter les confusions courantes en français : é/è/ê/e, terminaisons muettes (-ent/-ait), homophones (a/à, et/est, son/sont), avec des indices visuels",
+      "parameters": {
+        "text": {
+          "description": "Le texte à vérifier pour les éléments confondables"
+        },
+        "check_types": {
+          "description": "Quoi vérifier (tout, confusions de lettres, mots inversés, homophones)"
+        },
+        "show_mnemonics": {
+          "description": "Si inclure des astuces mnémotechniques visuelles pour chaque confusion détectée"
+        },
+        "context_aware": {
+          "description": "Si utiliser le contexte de la phrase pour suggérer le bon choix"
+        }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "Constructeur de Vocabulaire",
+      "description": "Crée des cartes de mots visuelles avec décomposition morphémique (préfixe/racine/suffixe), étymologie, familles de mots et moyens mnémotechniques pour enrichir le vocabulaire par le sens",
+      "parameters": {
+        "words": {
+          "description": "Liste de mots séparés par des virgules pour créer des cartes de vocabulaire"
+        },
+        "include_etymology": {
+          "description": "Si inclure l'origine du mot et son sens historique (latin, grec, francique)"
+        },
+        "include_word_family": {
+          "description": "Si montrer les mots apparentés partageant la même racine"
+        },
+        "include_mnemonic": {
+          "description": "Si générer une aide-mémoire visuelle ou narrative"
+        },
+        "reading_level": {
+          "description": "Niveau de complexité (primaire, collège, lycée, adulte)"
+        }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "Étayage d'Écriture",
+      "description": "Génère des cadres d'écriture structurés avec amorces de phrases, banques de connecteurs, modèles de paragraphes et organisateurs graphiques pour soutenir l'expression écrite",
+      "parameters": {
+        "task": {
+          "description": "Description de la tâche d'écriture (ex : 'texte argumentatif sur le recyclage', 'compte-rendu de lecture en 3 paragraphes')"
+        },
+        "format": {
+          "description": "Format d'écriture (dissertation, paragraphe, lettre, rapport, récit, courriel)"
+        },
+        "include_starters": {
+          "description": "Si inclure des suggestions d'amorces de phrases pour chaque section"
+        },
+        "include_transitions": {
+          "description": "Si inclure une banque de connecteurs logiques classés par fonction (addition, opposition, conclusion, etc.)"
+        },
+        "include_organizer": {
+          "description": "Si inclure un organisateur graphique (plan, carte mentale ou schéma) pour la planification"
+        },
+        "reading_level": {
+          "description": "Niveau de vocabulaire pour les amorces et connecteurs (primaire, collège, lycée, adulte)"
+        }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "Décodeur de Passages",
+      "description": "Découpe un passage de lecture en segments gérables avec vocabulaire préalable, indices de décodage intégrés, questions de compréhension par segment et modèle de résumé cumulatif",
+      "parameters": {
+        "passage": {
+          "description": "Le texte du passage à décoder et structurer"
+        },
+        "chunk_strategy": {
+          "description": "Comment découper le passage (phrase, paragraphe, coupure naturelle)"
+        },
+        "pre_teach_count": {
+          "description": "Nombre de mots difficiles à pré-enseigner avant chaque segment (0 pour ignorer)"
+        },
+        "include_decoding_hints": {
+          "description": "Si ajouter des guides de prononciation intégrés pour les mots difficiles (découpage syllabique + transcription phonétique)"
+        },
+        "include_summary_scaffold": {
+          "description": "Si fournir un modèle de résumé à compléter après le passage entier"
+        }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "Enrichissement Contextuel",
+      "description": "Développe un texte concis en ajoutant des mots et phrases de soutien sémantique autour du vocabulaire difficile, offrant aux lecteurs dyslexiques davantage d'indices contextuels pour décoder les mots inconnus — l'opposé de la simplification",
+      "parameters": {
+        "text": { "description": "Le texte à enrichir avec du soutien contextuel" },
+        "enrichment_level": { "description": "Combien de contexte ajouter (léger = appositions seulement, modéré = appositions + échos sémantiques, intensif = étayage contextuel complet)" },
+        "target_words": { "description": "Liste optionnelle de mots spécifiques à enrichir, séparés par des virgules. Si omis, détecte automatiquement les défis de décodage." },
+        "preserve_register": { "description": "Si maintenir le niveau de formalité original (vrai) ou passer à un langage conversationnel (faux)" },
+        "show_annotations": { "description": "Si marquer visuellement les phrases ajoutées (crochets ou couleur) pour qu'un enseignant ou parent puisse voir l'enrichissement" }
+      }
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "Habilidade de Apoio à Discalculia",
+    "description": "Ferramentas de acessibilidade para senso numérico, visualização matemática e suporte de cálculo passo a passo. Usa vírgula decimal e ponto para milhares conforme a notação lusófona"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "Apoio à Discalculia",
+      "description": "Conhecimento sobre discalculia, desafios de processamento numérico, dificuldades de subitização e intervenções baseadas em evidências. Respeita a vírgula decimal (3,14), o ponto de milhares (1.000) e o sistema métrico"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "Visualização de Números",
+      "description": "Cria representações visuais de números e relações matemáticas usando modelos concretos. Usa notação lusófona com vírgula decimal (ex: 3,14) e ponto para milhares (ex: 1.000)",
+      "parameters": {
+        "expression": {
+          "description": "O número ou expressão matemática a visualizar (com vírgula decimal, ex: 3,14)"
+        },
+        "model_type": {
+          "description": "Modelo de visualização (reta numérica, modelo de área, blocos base dez, barra de frações, gráfico circular)"
+        },
+        "include_labels": {
+          "description": "Se deve incluir rótulos descritivos e anotações em português"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "Matemática Passo a Passo",
+      "description": "Decompõe um problema matemático em etapas explícitas com explicações em linguagem simples. Usa convenções de notação lusófona (vírgula decimal, × para multiplicação)",
+      "parameters": {
+        "problem": {
+          "description": "O problema matemático a resolver passo a passo"
+        },
+        "difficulty_level": {
+          "description": "Nível de andaime (básico＝1.º–2.º ano, intermediário＝3.º–5.º ano, avançado＝6.º–9.º ano)"
+        },
+        "show_check": {
+          "description": "Se deve incluir uma etapa de verificação (prova real) no final"
+        },
+        "use_analogies": {
+          "description": "Se deve incluir exemplos do quotidiano (compras em reais/euros, distâncias em km) para conceitos abstratos"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "Prática de Estimativa",
+      "description": "Gera exercícios de estimativa que desenvolvem o senso numérico usando contextos cotidianos com reais/euros, quilómetros e o sistema métrico",
+      "parameters": {
+        "topic": {
+          "description": "Área temática (dinheiro (reais/euros), tempo, distância (quilómetros), peso (gramas/quilogramas), quantidade)"
+        },
+        "difficulty": {
+          "description": "Nível de dificuldade (iniciante, intermediário, avançado)"
+        },
+        "count": {
+          "description": "Número de exercícios a gerar"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "Comparação de Intervalos",
+      "description": "Compara dois ou mais conjuntos de dados visualmente usando barras de intervalo simplificadas com marcadores de valor central, projetadas para evitar a sobrecarga cognitiva de comparar estatísticas numericamente. Usa vírgula decimal (ex: 3,14) e ponto para milhares (ex: 1.000)",
+      "parameters": {
+        "datasets": {
+          "description": "Conjuntos de dados a comparar, cada um como 'Rótulo: mín-máx, centro' (ex: 'Turma A: 40-95, 72'). O valor central pode ser média, mediana ou moda."
+        },
+        "center_type": {
+          "description": "O que o marcador central representa (média, mediana, moda)"
+        },
+        "show_numbers": {
+          "description": "Se deve mostrar o valor central como número ao lado do marcador (falso = comparação puramente visual)"
+        },
+        "context": {
+          "description": "Contexto opcional (ex: 'notas de prova', 'temperaturas em °C', 'preços em reais/euros')"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "Grade de Proporções",
+      "description": "Visualiza proporções e porcentagens usando uma grade de quadrados contáveis em vez de gráficos de pizza, tornando as relações parte-todo concretas e contáveis",
+      "parameters": {
+        "items": {
+          "description": "Proporções a exibir, cada uma como 'Rótulo: valor' (ex: 'Aprovados: 72%', 'Meninos: 15 de 30'). Aceita porcentagens, frações ou formato 'X de Y'."
+        },
+        "total": {
+          "description": "O todo do qual as proporções fazem parte (padrão: detecção automática ou 100 para porcentagens)"
+        },
+        "grid_size": {
+          "description": "Dimensão da grade (padrão 10 = 10×10 = 100 quadrados). Use 5 para visuais mais simples com alunos mais jovens."
+        },
+        "side_by_side": {
+          "description": "Se exibir múltiplas proporções como grades separadas lado a lado para comparação"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "Direção da Tendência",
+      "description": "Mostra se os valores estão subindo, caindo ou estáveis usando indicadores direcionais simplificados e minigráficos opcionais, sem exigir leitura de eixos",
+      "parameters": {
+        "series": {
+          "description": "Séries de dados como 'Rótulo: v1, v2, v3, ...' (ex: 'Notas semanais: 6,5; 7,0; 6,8; 7,5; 8,0'). Pelo menos 3 valores necessários."
+        },
+        "show_sparkline": {
+          "description": "Se exibir uma mini curva de tendência ao lado da seta direcional (sem eixos, apenas a forma)"
+        },
+        "sensitivity": {
+          "description": "Quanto de mudança conta como tendência vs. estável (rigoroso, moderado, flexível)"
+        },
+        "context": {
+          "description": "Contexto opcional para o resumo (ex: 'notas de provas de matemática em 6 semanas')"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "Lacuna de Diferença",
+      "description": "Visualiza a diferença entre dois valores como uma barra de lacuna explícita, tornando visível 'quanto a mais ou a menos' sem exigir subtração mental",
+      "parameters": {
+        "value_a": {
+          "description": "Primeiro valor com rótulo (ex: 'Minha nota: 7,2')"
+        },
+        "value_b": {
+          "description": "Segundo valor com rótulo (ex: 'Média da turma: 6,5')"
+        },
+        "show_gap_value": {
+          "description": "Se rotular a lacuna com a diferença numérica (falso = mostrar apenas a lacuna visual)"
+        },
+        "context": {
+          "description": "Contexto opcional para a comparação (ex: 'pontos', 'centímetros', 'reais')"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "Tempo Decorrido",
+      "description": "Calcula e visualiza o tempo entre dois pontos usando uma barra de linha do tempo, evitando aritmética mental de base 60 com valores de relógio",
+      "parameters": {
+        "start_time": {
+          "description": "Hora de início (ex: '10:45', '14:00', '2:30 da tarde'). Brasil usa ambos os formatos; Portugal prefere 24h."
+        },
+        "end_time": {
+          "description": "Hora de fim (ex: '12:20', '16:15')"
+        },
+        "show_clock_faces": {
+          "description": "Se exibir diagramas simples de mostrador de relógio nos pontos de início e fim"
+        },
+        "break_into_steps": {
+          "description": "Se decompor o tempo decorrido em blocos de horas e minutos visualmente"
+        }
+      }
+    }
+  }
+}

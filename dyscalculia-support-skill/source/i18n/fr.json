@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "Compétence de Soutien à la Dyscalculie",
+    "description": "Outils d'accessibilité pour le sens des nombres, la visualisation mathématique et le soutien au calcul étape par étape. Utilise la virgule décimale et l'espace pour les milliers selon la notation française"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "Soutien à la Dyscalculie",
+      "description": "Connaissances sur la dyscalculie, les défis de traitement numérique, les difficultés de subitisation et les interventions fondées sur des preuves. Prend en compte la virgule décimale française (3,14), l'espace insécable pour les milliers (1 000) et le système métrique"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "Visualisation des Nombres",
+      "description": "Crée des représentations visuelles de nombres et de relations mathématiques. Utilise la notation française avec virgule décimale (ex : 3,14) et espace pour les milliers (ex : 1 000)",
+      "parameters": {
+        "expression": {
+          "description": "Le nombre ou l'expression mathématique à visualiser (avec virgule décimale, ex : 3,14)"
+        },
+        "model_type": {
+          "description": "Type de modèle (ligne numérique, modèle de surface, blocs base-dix, barre de fractions, graphique circulaire)"
+        },
+        "include_labels": {
+          "description": "Inclure des étiquettes descriptives et des annotations en français"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "Mathématiques Étape par Étape",
+      "description": "Décompose un problème mathématique en étapes explicites avec des explications en langage simple. Utilise les conventions françaises de notation (virgule décimale, × pour la multiplication)",
+      "parameters": {
+        "problem": {
+          "description": "Le problème mathématique à résoudre étape par étape"
+        },
+        "difficulty_level": {
+          "description": "Niveau d'étayage (basique＝CP-CE1, intermédiaire＝CE2-CM2, avancé＝collège)"
+        },
+        "show_check": {
+          "description": "Inclure une étape de vérification (preuve) à la fin"
+        },
+        "use_analogies": {
+          "description": "Inclure des exemples du quotidien (achats en euros, distances en km) pour les concepts abstraits"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "Exercices d'Estimation",
+      "description": "Génère des exercices d'estimation qui développent le sens des nombres en utilisant des contextes quotidiens français (euros, kilomètres, système métrique)",
+      "parameters": {
+        "topic": {
+          "description": "Domaine thématique (argent (euros), temps, distance (kilomètres), poids (grammes/kilogrammes), quantité)"
+        },
+        "difficulty": {
+          "description": "Niveau de difficulté (débutant, intermédiaire, avancé)"
+        },
+        "count": {
+          "description": "Nombre d'exercices à générer"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "Comparaison de Plages",
+      "description": "Compare deux ensembles de données ou plus visuellement à l'aide de barres de plage simplifiées avec des marqueurs de valeur centrale, conçues pour éviter la surcharge cognitive de la comparaison numérique. Utilise la virgule décimale française (ex : 3,14) et l'espace pour les milliers (ex : 1 000)",
+      "parameters": {
+        "datasets": {
+          "description": "Ensembles de données à comparer, chacun sous la forme 'Étiquette : min-max, centre' (ex : 'Classe A : 40-95, 72'). La valeur centrale peut être moyenne, médiane ou mode."
+        },
+        "center_type": {
+          "description": "Ce que représente le marqueur central (moyenne, médiane, mode)"
+        },
+        "show_numbers": {
+          "description": "Afficher la valeur centrale comme nombre à côté du marqueur (faux = comparaison purement visuelle)"
+        },
+        "context": {
+          "description": "Contexte optionnel (ex : 'notes d'examen', 'températures en °C', 'prix en euros')"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "Grille de Proportions",
+      "description": "Visualise les proportions et pourcentages à l'aide d'une grille de carrés comptables au lieu de diagrammes circulaires, rendant les relations partie-tout concrètes et dénombrables",
+      "parameters": {
+        "items": {
+          "description": "Proportions à afficher, chacune sous forme 'Étiquette: valeur' (ex: 'Réussite: 72%', 'Garçons: 15 sur 30'). Accepte pourcentages, fractions ou format 'X sur Y'."
+        },
+        "total": {
+          "description": "Le tout dont les proportions font partie (par défaut: auto-détection ou 100 pour les pourcentages)"
+        },
+        "grid_size": {
+          "description": "Dimension de la grille (par défaut 10 = 10×10 = 100 carrés). Utilisez 5 pour des visuels plus simples avec les jeunes apprenants."
+        },
+        "side_by_side": {
+          "description": "Si les proportions multiples doivent être affichées en grilles séparées côte à côte pour comparaison"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "Direction de Tendance",
+      "description": "Indique si les valeurs montent, descendent ou restent stables à l'aide d'indicateurs directionnels simplifiés et de mini-graphiques optionnels, sans nécessiter la lecture d'axes",
+      "parameters": {
+        "series": {
+          "description": "Séries de données sous forme 'Étiquette: v1, v2, v3, ...' (ex: 'Notes hebdomadaires: 6,5; 7,0; 6,8; 7,5; 8,0'). Au moins 3 valeurs nécessaires."
+        },
+        "show_sparkline": {
+          "description": "Si afficher une mini courbe de tendance à côté de la flèche directionnelle (sans axes, juste la forme)"
+        },
+        "sensitivity": {
+          "description": "Combien de changement compte comme tendance vs. stable (strict, modéré, souple)"
+        },
+        "context": {
+          "description": "Contexte optionnel pour le résumé (ex: 'notes d'examens de maths sur 6 semaines')"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "Écart de Différence",
+      "description": "Visualise la différence entre deux valeurs sous forme de barre d'écart explicite, rendant visible 'combien de plus ou de moins' sans nécessiter de soustraction mentale",
+      "parameters": {
+        "value_a": {
+          "description": "Première valeur avec étiquette (ex: 'Ma note: 7,2')"
+        },
+        "value_b": {
+          "description": "Deuxième valeur avec étiquette (ex: 'Moyenne de classe: 6,5')"
+        },
+        "show_gap_value": {
+          "description": "Si étiqueter l'écart avec la différence numérique (faux = afficher uniquement l'écart visuel)"
+        },
+        "context": {
+          "description": "Contexte optionnel pour la comparaison (ex: 'points', 'centimètres', 'euros')"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "Temps Écoulé",
+      "description": "Calcule et visualise le temps entre deux points à l'aide d'une barre chronologique, évitant l'arithmétique mentale en base 60 sur les valeurs d'horloge",
+      "parameters": {
+        "start_time": {
+          "description": "Heure de début (ex: '10h45', '14h00'). La France utilise le format 24h avec 'h' comme séparateur."
+        },
+        "end_time": {
+          "description": "Heure de fin (ex: '12h20', '16h15')"
+        },
+        "show_clock_faces": {
+          "description": "Si afficher des cadrans d'horloge simples aux points de début et de fin"
+        },
+        "break_into_steps": {
+          "description": "Si décomposer le temps écoulé en blocs d'heures et de minutes visuellement"
+        }
+      }
+    }
+  }
+}

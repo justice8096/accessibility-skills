@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "name": "计算障碍支持技能",
+    "description": "针对计算障碍用户的数感、数学可视化和分步计算支持的无障碍工具，融合珠算等传统数学方法"
+  },
+  "skills": {
+    "dyscalculia-support": {
+      "displayName": "计算障碍（数学学习困难）支持",
+      "description": "关于计算障碍、数字处理挑战、即时量化（subitizing）困难、空间推理和循证干预的知识。支持珠算（算盘）可视化方法，适应中文万进制（万、亿、兆）数位体系"
+    }
+  },
+  "commands": {
+    "number-visualization": {
+      "displayName": "数字可视化",
+      "description": "使用算盘（珠算）模型、数轴、面积模型等具体模型创建数字和数学关系的视觉表示。支持中文万进制数位分组（万、亿）",
+      "parameters": {
+        "expression": {
+          "description": "要可视化的数字或数学表达式"
+        },
+        "model_type": {
+          "description": "可视化模型（数轴、面积模型、十进制方块、分数条、饼图）。中文环境下可使用算盘模型"
+        },
+        "include_labels": {
+          "description": "是否包含描述性标签和注释（支持简体中文标注）"
+        }
+      }
+    },
+    "step-by-step-math": {
+      "displayName": "分步数学解题",
+      "description": "将数学问题分解为明确的步骤，配以通俗易懂的中文解释。可结合珠算口诀辅助理解",
+      "parameters": {
+        "problem": {
+          "description": "要分步解决的数学问题"
+        },
+        "difficulty_level": {
+          "description": "脚手架级别（基础＝小学低年级、中级＝小学高年级、高级＝初中）"
+        },
+        "show_check": {
+          "description": "是否在最后包含验算步骤"
+        },
+        "use_analogies": {
+          "description": "是否使用日常生活类比（购物、乘车等）来解释抽象概念"
+        }
+      }
+    },
+    "estimation-practice": {
+      "displayName": "估算练习",
+      "description": "使用日常情境（购物用人民币、出行距离用公里）生成培养数感和数量级意识的估算练习",
+      "parameters": {
+        "topic": {
+          "description": "估算练习的主题领域（金钱（人民币）、时间、距离（公里）、重量（克/千克）、数量）"
+        },
+        "difficulty": {
+          "description": "难度级别（初级、中级、高级）"
+        },
+        "count": {
+          "description": "要生成的练习数量"
+        }
+      }
+    },
+    "range-comparison": {
+      "displayName": "范围比较",
+      "description": "使用简化的范围条和中心值标记来直观比较两个或多个数据集，避免数字统计比较带来的认知负担。支持中文万进制数位体系",
+      "parameters": {
+        "datasets": {
+          "description": "要比较的数据集，格式为「标签: 最小值-最大值, 中心值」（如「A班: 40-95, 72」）。中心值可以是平均值、中位数或众数"
+        },
+        "center_type": {
+          "description": "中心标记代表什么（平均值、中位数、众数）"
+        },
+        "show_numbers": {
+          "description": "是否在标记旁显示中心值数字（false = 纯视觉比较）"
+        },
+        "context": {
+          "description": "可选的情境说明（如「考试成绩」「温度（℃）」「价格（人民币）」）"
+        }
+      }
+    },
+    "proportion-waffle": {
+      "displayName": "比例华夫格",
+      "description": "使用可计数的方格网格代替饼图来可视化比例和百分比，使部分与整体的关系具体化、可数化",
+      "parameters": {
+        "items": {
+          "description": "要显示的比例，格式为'标签: 值'（如：'通过: 72%'、'男生: 30人中15人'）。支持百分比、分数或'X/Y'格式。"
+        },
+        "total": {
+          "description": "比例所属的整体（默认：自动检测，百分比时为100）"
+        },
+        "grid_size": {
+          "description": "网格尺寸（默认10 = 10×10 = 100格）。低年级学生可用5。"
+        },
+        "side_by_side": {
+          "description": "是否将多个比例以并排的独立网格显示以便比较"
+        }
+      }
+    },
+    "trend-direction": {
+      "displayName": "趋势方向",
+      "description": "使用简化的方向指示器和可选的迷你图表显示数值是上升、下降还是持平，无需读取坐标轴",
+      "parameters": {
+        "series": {
+          "description": "数据序列，格式为'标签: v1, v2, v3, ...'（如：'每周成绩: 65, 70, 68, 75, 80'）。至少需要3个值。"
+        },
+        "show_sparkline": {
+          "description": "是否在方向箭头旁显示迷你趋势曲线（无坐标轴，仅显示形状）"
+        },
+        "sensitivity": {
+          "description": "多大的变化算作趋势（严格、适中、宽松）"
+        },
+        "context": {
+          "description": "摘要的可选上下文（如：'6周的数学测验成绩'）"
+        }
+      }
+    },
+    "difference-gap": {
+      "displayName": "差异间隔",
+      "description": "将两个值之间的差异可视化为明确的间隔条，使'多多少/少多少'可见，无需心算减法",
+      "parameters": {
+        "value_a": {
+          "description": "带标签的第一个值（如：'我的分数: 72'）"
+        },
+        "value_b": {
+          "description": "带标签的第二个值（如：'班级平均: 65'）"
+        },
+        "show_gap_value": {
+          "description": "是否在间隔处标注数值差异（false = 仅显示视觉间隔）"
+        },
+        "context": {
+          "description": "比较的可选上下文（如：'分', '厘米', '元'）"
+        }
+      }
+    },
+    "elapsed-time": {
+      "displayName": "经过时间",
+      "description": "使用时间轴条计算和可视化两个时间点之间的时间，避免60进制的心算",
+      "parameters": {
+        "start_time": {
+          "description": "开始时间（如：'10:45'、'下午2:30'、'14:00'）。中国通常使用24小时制。"
+        },
+        "end_time": {
+          "description": "结束时间（如：'12:20'、'16:15'）"
+        },
+        "show_clock_faces": {
+          "description": "是否在起止时间点显示简单的钟面图"
+        },
+        "break_into_steps": {
+          "description": "是否将经过时间可视化地分解为小时和分钟块"
+        }
+      }
+    }
+  }
+}

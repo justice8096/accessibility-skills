@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "name": "난독증 지원 스킬",
+    "description": "난독증 사용자를 위한 읽기 지원, 텍스트 간소화 및 글꼴 추천 접근성 도구"
+  },
+  "skills": {
+    "dyslexia-support": {
+      "displayName": "난독증 지원",
+      "description": "난독증, 읽기 어려움, 음운 처리, 적응 전략 및 증거 기반 개입에 대한 지식"
+    }
+  },
+  "commands": {
+    "text-simplification": {
+      "displayName": "텍스트 간소화",
+      "description": "문장 복잡도를 줄이고 어려운 단어를 대체하여 텍스트를 간소화합니다",
+      "parameters": {
+        "text": {
+          "description": "간소화할 텍스트"
+        },
+        "reading_level": {
+          "description": "목표 읽기 수준 (초등, 중등, 고등, 성인)"
+        },
+        "preserve_meaning": {
+          "description": "원래 의미를 엄격히 유지할지 여부"
+        }
+      }
+    },
+    "reading-guide-generation": {
+      "displayName": "읽기 가이드 생성",
+      "description": "분할된 섹션, 어휘 미리보기 및 이해도 체크포인트가 포함된 구조화된 읽기 가이드를 생성합니다",
+      "parameters": {
+        "document": {
+          "description": "가이드를 생성할 문서 내용"
+        },
+        "chunk_size": {
+          "description": "각 읽기 청크의 크기 (단락, 섹션, 페이지)"
+        },
+        "include_vocabulary": {
+          "description": "어려운 단어에 대한 어휘 미리보기를 포함할지 여부"
+        },
+        "include_checkpoints": {
+          "description": "각 청크 후에 이해도 체크포인트를 추가할지 여부"
+        }
+      }
+    },
+    "font-recommendation": {
+      "displayName": "글꼴 추천",
+      "description": "난독증 친화적인 글꼴과 텍스트 서식 설정을 추천합니다",
+      "parameters": {
+        "context": {
+          "description": "읽기 환경 (웹, 인쇄, 모바일, 전자책, 프레젠테이션)"
+        },
+        "age_group": {
+          "description": "독자의 연령대 (어린이, 청소년, 성인)"
+        },
+        "include_formatting": {
+          "description": "줄 간격, 여백 및 색상 권장 사항을 포함할지 여부"
+        }
+      }
+    },
+    "syllable-highlighter": {
+      "displayName": "음절 강조기",
+      "description": "단어를 색상 코드 음절로 분해하여 음운 해독을 지원하며, 강세 표시와 형태소 경계를 표시합니다",
+      "parameters": {
+        "text": { "description": "음절 분리할 단어 또는 텍스트" },
+        "highlight_mode": { "description": "음절 경계 표시 방법 (색상 교대, 밑줄, 슬래시 구분, 번호)" },
+        "show_stress": { "description": "강세 음절을 강조할지 여부" },
+        "show_morphemes": { "description": "접두사, 어근, 접미사 경계를 추가 표시할지 여부" }
+      }
+    },
+    "confusion-checker": {
+      "displayName": "혼동 검사기",
+      "description": "텍스트에서 자주 혼동되는 항목(ㅂ/ㄷ 받침, 이/의, 되/돼, 맞추다/맞히다)을 검출하고 시각적 구별 단서를 제공합니다",
+      "parameters": {
+        "text": { "description": "혼동 요소를 검사할 텍스트" },
+        "check_types": { "description": "검사 대상 (전체, 글자 혼동, 단어 혼동, 동음이의어)" },
+        "show_mnemonics": { "description": "검출된 각 혼동에 대해 시각적 기억 요령을 포함할지 여부" },
+        "context_aware": { "description": "문장 맥락을 활용하여 올바른 선택을 제안할지 여부" }
+      }
+    },
+    "vocabulary-builder": {
+      "displayName": "어휘 구축기",
+      "description": "형태소 분석(접두사/어근/접미사), 어원, 관련 어휘군, 기억술을 포함한 시각적 단어 지도를 만들어 발음이 아닌 의미를 통해 어휘를 구축합니다",
+      "parameters": {
+        "words": { "description": "어휘 지도를 만들 단어의 쉼표 구분 목록" },
+        "include_etymology": { "description": "어원과 역사적 의미를 포함할지 여부 (한자어 분석 포함)" },
+        "include_word_family": { "description": "같은 어근을 공유하는 관련 단어를 표시할지 여부" },
+        "include_mnemonic": { "description": "시각적 또는 이야기 기반 기억 도구를 생성할지 여부" },
+        "reading_level": { "description": "설명의 복잡도 (초등, 중등, 고등, 성인)" }
+      }
+    },
+    "writing-scaffold": {
+      "displayName": "글쓰기 비계",
+      "description": "문장 시작어, 접속어 모음, 문단 템플릿, 그래픽 조직도를 포함한 구조화된 글쓰기 프레임워크를 생성하여 서면 표현을 지원합니다",
+      "parameters": {
+        "task": { "description": "글쓰기 과제 설명 (예: '재활용에 대한 설득 글', '독서 감상문 3문단')" },
+        "format": { "description": "글쓰기 형식 (에세이, 문단, 편지, 보고서, 이야기, 이메일)" },
+        "include_starters": { "description": "각 섹션에 문장 시작어 제안을 포함할지 여부" },
+        "include_transitions": { "description": "기능별로 정리된 접속어 모음을 포함할지 여부 (추가, 대조, 결론 등)" },
+        "include_organizer": { "description": "계획용 그래픽 조직도(개요, 마인드맵, 흐름도)를 포함할지 여부" },
+        "reading_level": { "description": "시작어와 접속어의 어휘 수준 (초등, 중등, 고등, 성인)" }
+      }
+    },
+    "passage-decoder": {
+      "displayName": "지문 해독기",
+      "description": "읽기 지문을 관리 가능한 단위로 나누어 사전 어휘, 인라인 해독 힌트, 단위별 이해도 점검, 누적 요약 틀을 제공합니다",
+      "parameters": {
+        "passage": { "description": "해독하고 구조화할 지문 텍스트" },
+        "chunk_strategy": { "description": "지문 분할 방법 (문장, 문단, 자연스러운 끊김)" },
+        "pre_teach_count": { "description": "각 단위 전에 사전 학습할 어려운 단어 수 (0이면 건너뜀)" },
+        "include_decoding_hints": { "description": "어려운 단어에 인라인 발음 안내를 추가할지 여부 (음절 분리 + 발음 표기)" },
+        "include_summary_scaffold": { "description": "전체 지문 후 빈칸 채우기 요약 틀을 제공할지 여부" }
+      }
+    },
+    "context-enrichment": {
+      "displayName": "맥락 보강",
+      "description": "간결한 텍스트를 확장하여 어려운 어휘 주변에 의미적으로 지원하는 단어와 구문을 추가함으로써, 난독증 독자가 낯선 단어를 문맥에서 해독할 수 있도록 더 많은 단서를 제공합니다 — 간소화의 반대 접근법",
+      "parameters": {
+        "text": { "description": "맥락적 지원으로 보강할 텍스트" },
+        "enrichment_level": { "description": "추가할 맥락의 양 (가벼움 = 동격어만, 보통 = 동격어 + 의미 반복, 집중 = 완전한 맥락 비계)" },
+        "target_words": { "description": "보강할 특정 단어의 쉼표 구분 목록 (선택사항). 생략 시 해독 난이도가 높은 단어를 자동 감지." },
+        "preserve_register": { "description": "원문의 격식 수준을 유지할지 (true) 대화체로 전환할지 (false)" },
+        "show_annotations": { "description": "맥락을 위해 추가된 구문을 시각적으로 표시(괄호 또는 색상)하여 교사나 학부모가 보강 내용을 확인할 수 있게 할지 여부" }
+      }
+    }
+  }
+}

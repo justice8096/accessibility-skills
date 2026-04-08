@@ -150,21 +150,28 @@ function stringifyYaml(obj: unknown, indent: number = 2): string {
     if (Array.isArray(val)) {
       if (val.length === 0) return "[]";
       const items: string[] = [];
-      for (const item of val) { items.push("- " + stringify(item, depth + 1)); }
-      return items.join("\n" + spaces);
+      for (const item of val) {
+        const rendered = stringify(item, depth + 1);
+        items.push(spaces + "- " + rendered);
+      }
+      return items.join("\n");
     }
     if (typeof val === "object") {
       const entries = Object.entries(val);
       if (entries.length === 0) return "{}";
       const items: string[] = [];
+      const childSpaces = " ".repeat((depth + 1) * indent);
       for (const [key, value] of entries) {
         if (typeof value === "object" && value !== null) {
-          items.push(key + ":");
+          items.push(spaces + key + ":");
           const nested = stringify(value, depth + 1);
-          for (const line of nested.split("\n")) { items.push("  " + line); }
-        } else { items.push(key + ": " + stringify(value, depth + 1)); }
+          for (const line of nested.split("\n")) {
+            if (line.trimStart().startsWith("-")) { items.push(line); }
+            else { items.push(childSpaces + line); }
+          }
+        } else { items.push(spaces + key + ": " + stringify(value, depth + 1)); }
       }
-      return items.join("\n" + spaces);
+      return items.join("\n");
     }
     return String(val);
   }
@@ -460,15 +467,15 @@ function generateMcpServer(manifest: Manifest, locale?: string, i18nConfig?: I18
       let jsProp = "      " + paramName + ': { type: "' + paramDef.type + '", description: "' + cmd.description.replace(/"/g, '\\"') + '" }';
       jsonSchemaProps.push(jsProp);
     }
-    const toolCode = ['import { z } from "zod";', 'import { loadSkillContent } from "../knowledge/loader.js";', "",
+    const toolCode = ['import { z } from "zod";', 'import { loadCommandContent } from "../knowledge/loader.js";', "",
       "const " + toolName + "Schema = z.object({", ...zodFields, "});", "",
       "export const " + toolName + 'Definition = { name: "' + toolName + '", description: "' + cmd.description.replace(/"/g, '\\"') + '",',
       "  inputSchema: { type: \"object\" as const, properties: {", ...jsonSchemaProps.map((p) => p + ","),
       "    }, required: [" + requiredParams.map((p) => '"' + p + '"').join(", ") + "] } };", "",
       "export async function handle(input: Record<string, unknown>): Promise<string> {",
       "  const validated = " + toolName + "Schema.parse(input);",
-      '  const skillContent = await loadSkillContent("' + cmd.name + '");',
-      '  return JSON.stringify({ status: "success", command: "' + cmd.name + '", message: "Tool executed.", skillPreview: skillContent.slice(0, 200), input: validated }, null, 2);',
+      '  const commandContent = await loadCommandContent("' + cmd.name + '");',
+      '  return JSON.stringify({ status: "success", command: "' + cmd.name + '", message: "Tool executed.", commandPreview: commandContent.slice(0, 200), input: validated }, null, 2);',
       "}"].join("\n");
     writeFileSync(resolve(base, "src/tools/" + toolName + ".ts"), toolCode);
   }

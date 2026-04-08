@@ -1,0 +1,26 @@
+{
+	"node": "n8n-nodes-accessibility.accessibilitySkill",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI", "Miscellaneous"],
+	"subcategories": {
+		"AI": ["Language Models"]
+	},
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/justice8096/accessibility-skills"
+			}
+		]
+	},
+	"alias": [
+		"dyslexia",
+		"dyscalculia",
+		"accessibility",
+		"reading support",
+		"math support",
+		"a11y",
+		"text simplification",
+		"number visualization"
+	]
+}

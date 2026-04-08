@@ -129,3 +129,14 @@ All demos support the 10 built-in locales: en, es, fr, de, ja, zh, ar, pt, ko, h
 - **n8n**: Add `"locale": "es"` to the webhook body
 - **openai_compatible_demo.py**: Set locale in the `load_functions()` call
 - **ChatGPT**: Use the localized prompt packs from `dist/prompts/{locale}/`
+
+## Prerequisites
+
+Before running the samples, build the skills to generate the `dist/` directories:
+
+```bash
+cd ../dyslexia-support-skill && npm install && npm run build
+cd ../dyscalculia-support-skill && npm install && npm run build
+```
+
+The `ollama_runner.py` and `openai_compatible_demo.py` scripts read from these build outputs. The n8n workflow and ChatGPT prompt pack are self-contained.

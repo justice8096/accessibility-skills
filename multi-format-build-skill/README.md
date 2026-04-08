@@ -11,13 +11,16 @@ A reusable Claude skill that generates TypeScript build systems for skill/plugin
 5. **MCP Server** — Full TypeScript MCP server with tools
 6. **Standalone CLI** — Command-line tool with subcommands
 
-## How It Works
+## How it works
 
 Write your domain knowledge once as markdown files with a standardized manifest, and the generated `build.ts` compiles everything into all 6 formats automatically. Enable i18n to generate locale-specific outputs for every format.
+
+This repo's `dyslexia-support-skill` and `dyscalculia-support-skill` are both built using this system — each has a single `source/manifest.json` that produces Claude plugins, OpenAI functions, n8n nodes, YAML prompts, MCP servers, and CLIs across 10 locales.
 
 ## Usage
 
 When this skill is installed, ask Claude to:
+
 - "Scaffold a new skill project for [domain]"
 - "Add multi-format build output to my existing skill"
 - "Generate a build system for my plugin"

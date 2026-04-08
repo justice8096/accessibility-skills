@@ -1,1 +1,14 @@
-node_modules/\n.DS_Store\n*.lock
+node_modules/
+dist/
+.DS_Store
+
+# Secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account.json
+**/secrets/

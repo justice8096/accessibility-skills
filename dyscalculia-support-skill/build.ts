@@ -1,9 +1,30 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "fs";
-import { resolve, dirname } from "path";
+import { resolve, dirname, basename } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// ============================================================================
+// SECURITY: Input Sanitization
+// ============================================================================
+
+const VALID_FORMATS: ReadonlySet<string> = new Set(["claude-plugin", "openai", "n8n", "prompts", "mcp", "cli", "all"]);
+const SAFE_NAME_RE = /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
+
+/** Validate a name used in file path construction (locale, skill name, command name) */
+function sanitizeName(name: string, label: string): string {
+  const clean = basename(name); // strip any directory traversal
+  if (!SAFE_NAME_RE.test(clean)) {
+    throw new Error(`Invalid ${label}: "${name}" — must be alphanumeric with hyphens/dots/underscores only`);
+  }
+  return clean;
+}
+
+/** Escape a string for safe insertion into generated TypeScript code */
+function escapeForCodegen(str: string): string {
+  return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/`/g, "\\`").replace(/\$/g, "\\$").replace(/\n/g, "\\n");
+}
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -129,6 +150,12 @@ function parseArgs(): CLIArgs {
     else if (arg === "--clean") { result.clean = true; }
     else if (arg === "--validate-only") { result.validateOnly = true; }
   }
+  // Validate format
+  if (!VALID_FORMATS.has(result.format)) {
+    throw new Error(`Invalid --format "${result.format}". Valid: ${[...VALID_FORMATS].join(", ")}`);
+  }
+  // Validate locale (allow "all" or safe name patterns)
+  if (result.locale !== "all") { sanitizeName(result.locale, "locale"); }
   return result;
 }
 
@@ -137,45 +164,76 @@ function parseArgs(): CLIArgs {
 // ============================================================================
 
 function stringifyYaml(obj: unknown, indent: number = 2): string {
-  function stringify(val: unknown, depth: number = 0): string {
-    const spaces = " ".repeat(depth * indent);
+  const lines: string[] = [];
+
+  function scalar(val: unknown): string {
     if (val === null || val === undefined) return "null";
     if (typeof val === "string") {
-      if (val.includes("\n") || val.includes(":") || val.includes("#")) {
+      if (val.includes("\n") || val.includes(":") || val.includes("#") || val.includes("'")) {
         return "'" + val.replace(/'/g, "''") + "'";
       }
       return val;
     }
-    if (typeof val === "number" || typeof val === "boolean") return String(val);
-    if (Array.isArray(val)) {
-      if (val.length === 0) return "[]";
-      const items: string[] = [];
-      for (const item of val) {
-        const rendered = stringify(item, depth + 1);
-        items.push(spaces + "- " + rendered);
-      }
-      return items.join("\n");
-    }
-    if (typeof val === "object") {
-      const entries = Object.entries(val);
-      if (entries.length === 0) return "{}";
-      const items: string[] = [];
-      const childSpaces = " ".repeat((depth + 1) * indent);
-      for (const [key, value] of entries) {
-        if (typeof value === "object" && value !== null) {
-          items.push(spaces + key + ":");
-          const nested = stringify(value, depth + 1);
-          for (const line of nested.split("\n")) {
-            if (line.trimStart().startsWith("-")) { items.push(line); }
-            else { items.push(childSpaces + line); }
-          }
-        } else { items.push(spaces + key + ": " + stringify(value, depth + 1)); }
-      }
-      return items.join("\n");
-    }
     return String(val);
   }
-  return stringify(obj);
+
+  function isScalar(val: unknown): boolean {
+    return val === null || val === undefined || typeof val !== "object";
+  }
+
+  function emitValue(val: unknown, depth: number): void {
+    if (isScalar(val)) { lines.push(scalar(val)); return; }
+    if (Array.isArray(val)) { emitArray(val, depth); return; }
+    emitObject(val as Record<string, unknown>, depth);
+  }
+
+  function emitArray(arr: unknown[], depth: number): void {
+    if (arr.length === 0) { lines.push("[]"); return; }
+    const pad = " ".repeat(depth * indent);
+    for (const item of arr) {
+      if (isScalar(item)) {
+        lines.push(pad + "- " + scalar(item));
+      } else if (Array.isArray(item)) {
+        lines.push(pad + "-");
+        emitArray(item, depth + 1);
+      } else {
+        const entries = Object.entries(item as Record<string, unknown>);
+        if (entries.length === 0) { lines.push(pad + "- {}"); continue; }
+        const [firstKey, firstVal] = entries[0];
+        if (isScalar(firstVal)) {
+          lines.push(pad + "- " + firstKey + ": " + scalar(firstVal));
+        } else {
+          lines.push(pad + "- " + firstKey + ":");
+          emitValue(firstVal, depth + 2);
+        }
+        for (let i = 1; i < entries.length; i++) {
+          emitKeyValue(entries[i][0], entries[i][1], depth + 1);
+        }
+      }
+    }
+  }
+
+  function emitObject(obj: Record<string, unknown>, depth: number): void {
+    const entries = Object.entries(obj);
+    if (entries.length === 0) { lines.push("{}"); return; }
+    for (const [key, value] of entries) { emitKeyValue(key, value, depth); }
+  }
+
+  function emitKeyValue(key: string, value: unknown, depth: number): void {
+    const pad = " ".repeat(depth * indent);
+    if (isScalar(value)) {
+      lines.push(pad + key + ": " + scalar(value));
+    } else {
+      lines.push(pad + key + ":");
+      if (Array.isArray(value)) { emitArray(value, depth + 1); }
+      else { emitObject(value as Record<string, unknown>, depth + 1); }
+    }
+  }
+
+  if (typeof obj === "object" && obj !== null && !Array.isArray(obj)) {
+    emitObject(obj as Record<string, unknown>, 0);
+  } else { emitValue(obj, 0); }
+  return lines.join("\n");
 }
 
 // ============================================================================
@@ -215,7 +273,8 @@ function isRtl(locale: string): boolean {
 }
 
 function loadLocaleStrings(locale: string): LocaleStrings | null {
-  const localePath = resolve(__dirname, "source/i18n/" + locale + ".json");
+  const safeLocale = sanitizeName(locale, "locale");
+  const localePath = resolve(__dirname, "source/i18n/" + safeLocale + ".json");
   try {
     return JSON.parse(readFileSync(localePath, "utf-8")) as LocaleStrings;
   } catch {
@@ -273,16 +332,20 @@ function localizeManifest(manifest: Manifest, locale: string, strings: LocaleStr
 }
 
 function loadLocalizedSkillMarkdown(skillName: string, locale: string, config: I18nConfig): string {
+  const safeLocale = sanitizeName(locale, "locale");
+  const safeName = sanitizeName(skillName, "skill name");
   if (config.localizedMarkdown && locale !== config.defaultLocale) {
-    const localizedPath = resolve(__dirname, "source/i18n/" + locale + "/skills/" + skillName + ".md");
+    const localizedPath = resolve(__dirname, "source/i18n/" + safeLocale + "/skills/" + safeName + ".md");
     try { return readFileSync(localizedPath, "utf-8"); } catch { /* fall through to default */ }
   }
   return loadSkillMarkdown(skillName);
 }
 
 function loadLocalizedCommandMarkdown(commandName: string, locale: string, config: I18nConfig): string {
+  const safeLocale = sanitizeName(locale, "locale");
+  const safeName = sanitizeName(commandName, "command name");
   if (config.localizedMarkdown && locale !== config.defaultLocale) {
-    const localizedPath = resolve(__dirname, "source/i18n/" + locale + "/commands/" + commandName + ".md");
+    const localizedPath = resolve(__dirname, "source/i18n/" + safeLocale + "/commands/" + safeName + ".md");
     try { return readFileSync(localizedPath, "utf-8"); } catch { /* fall through to default */ }
   }
   return loadCommandMarkdown(commandName);
@@ -314,10 +377,12 @@ function loadManifest(): Manifest {
 }
 
 function loadSkillMarkdown(skillName: string): string {
-  return readMarkdown(resolve(__dirname, "source/skills/" + skillName + ".md"));
+  const safeName = sanitizeName(skillName, "skill name");
+  return readMarkdown(resolve(__dirname, "source/skills/" + safeName + ".md"));
 }
 function loadCommandMarkdown(commandName: string): string {
-  return readMarkdown(resolve(__dirname, "source/commands/" + commandName + ".md"));
+  const safeName = sanitizeName(commandName, "command name");
+  return readMarkdown(resolve(__dirname, "source/commands/" + safeName + ".md"));
 }
 
 // ============================================================================
@@ -464,32 +529,41 @@ function generateMcpServer(manifest: Manifest, locale?: string, i18nConfig?: I18
       else zField += "string()";
       if (!requiredParams.includes(paramName)) zField += ".optional()";
       zField += ","; zodFields.push(zField);
-      let jsProp = "      " + paramName + ': { type: "' + paramDef.type + '", description: "' + cmd.description.replace(/"/g, '\\"') + '" }';
+      let jsProp = "      " + sanitizeName(paramName, "param name") + ': { type: "' + escapeForCodegen(paramDef.type) + '", description: "' + escapeForCodegen(cmd.description) + '" }';
       jsonSchemaProps.push(jsProp);
     }
+    const safeDesc = escapeForCodegen(cmd.description);
+    const safeCmdName = escapeForCodegen(cmd.name);
     const toolCode = ['import { z } from "zod";', 'import { loadCommandContent } from "../knowledge/loader.js";', "",
       "const " + toolName + "Schema = z.object({", ...zodFields, "});", "",
-      "export const " + toolName + 'Definition = { name: "' + toolName + '", description: "' + cmd.description.replace(/"/g, '\\"') + '",',
+      "export const " + toolName + 'Definition = { name: "' + toolName + '", description: "' + safeDesc + '",',
       "  inputSchema: { type: \"object\" as const, properties: {", ...jsonSchemaProps.map((p) => p + ","),
-      "    }, required: [" + requiredParams.map((p) => '"' + p + '"').join(", ") + "] } };", "",
+      "    }, required: [" + requiredParams.map((p) => '"' + escapeForCodegen(p) + '"').join(", ") + "] } };", "",
       "export async function handle(input: Record<string, unknown>): Promise<string> {",
       "  const validated = " + toolName + "Schema.parse(input);",
-      '  const commandContent = await loadCommandContent("' + cmd.name + '");',
-      '  return JSON.stringify({ status: "success", command: "' + cmd.name + '", message: "Tool executed.", commandPreview: commandContent.slice(0, 200), input: validated }, null, 2);',
+      '  const commandContent = await loadCommandContent("' + safeCmdName + '");',
+      '  return JSON.stringify({ status: "success", command: "' + safeCmdName + '", message: "Tool executed.", commandPreview: commandContent.slice(0, 200), input: validated }, null, 2);',
       "}"].join("\n");
     writeFileSync(resolve(base, "src/tools/" + toolName + ".ts"), toolCode);
   }
 
-  const loaderCode = ['import { readFileSync } from "fs";', 'import { resolve, dirname } from "path";', 'import { fileURLToPath } from "url";', "",
+  const loaderCode = ['import { readFileSync } from "fs";', 'import { resolve, dirname, basename } from "path";', 'import { fileURLToPath } from "url";', "",
     "const __filename = fileURLToPath(import.meta.url);", "const __dirname = dirname(__filename);", "",
+    "const SAFE_ID = /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;",
+    "function safeName(id: string): string {",
+    "  const clean = basename(id);",
+    '  if (!SAFE_ID.test(clean)) throw new Error("Invalid identifier: " + id);',
+    "  return clean;", "}", "",
     "const CACHE = new Map<string, string>();", "",
     "export async function loadSkillContent(skillId: string): Promise<string> {",
-    '  if (CACHE.has(skillId)) return CACHE.get(skillId)!;', "  try {",
-    '    const p = resolve(__dirname, "../../knowledge/skills/" + skillId + ".md");',
-    '    const content = readFileSync(p, "utf-8");', "    CACHE.set(skillId, content); return content;",
+    "  const safe = safeName(skillId);",
+    '  if (CACHE.has(safe)) return CACHE.get(safe)!;', "  try {",
+    '    const p = resolve(__dirname, "../../knowledge/skills/" + safe + ".md");',
+    '    const content = readFileSync(p, "utf-8");', "    CACHE.set(safe, content); return content;",
     '  } catch { return ""; }', "}", "",
     "export async function loadCommandContent(commandId: string): Promise<string> {",
-    '  try { return readFileSync(resolve(__dirname, "../../knowledge/commands/" + commandId + ".md"), "utf-8"); }',
+    "  const safe = safeName(commandId);",
+    '  try { return readFileSync(resolve(__dirname, "../../knowledge/commands/" + safe + ".md"), "utf-8"); }',
     '  catch { return ""; }', "}"].join("\n");
   writeFileSync(resolve(base, "src/knowledge/loader.ts"), loaderCode);
 

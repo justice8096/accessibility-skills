@@ -37,7 +37,9 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 BASE_URL = os.environ.get("OPENAI_BASE_URL", "http://localhost:11434/v1")
-API_KEY = os.environ.get("OPENAI_API_KEY", "ollama")  # Ollama doesn't need a real key
+# Ollama's OpenAI-compatible endpoint does not require authentication.
+# When using a real OpenAI key, set OPENAI_API_KEY in your environment — never hardcode it.
+API_KEY = os.environ.get("OPENAI_API_KEY", "not-required-for-ollama")
 MODEL = os.environ.get("OPENAI_MODEL", "llama3")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
